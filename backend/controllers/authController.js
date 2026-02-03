@@ -60,7 +60,10 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    console.log('[LOGIN] Request:', { email: email || '(kosong)', passwordAda: !!password });
+
     if (!email || !password) {
+      console.log('[LOGIN] Gagal: email atau password kosong');
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
@@ -71,15 +74,19 @@ const login = async (req, res) => {
     );
 
     if (users.length === 0) {
+      console.log('[LOGIN] Gagal: user tidak ditemukan untuk email:', email);
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     const user = users[0];
+    console.log('[LOGIN] User ditemukan:', { id: user.id, email: user.email, role: user.role });
 
     // Verify password
     const isValidPassword = await bcrypt.compare(password, user.password);
+    console.log('[LOGIN] Cek password:', isValidPassword ? 'COCOK' : 'TIDAK COCOK');
 
     if (!isValidPassword) {
+      console.log('[LOGIN] Gagal: password salah');
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
@@ -90,6 +97,7 @@ const login = async (req, res) => {
       { expiresIn: '7d' }
     );
 
+    console.log('[LOGIN] Sukses:', user.email);
     res.json({
       message: 'Login successful',
       token,
@@ -101,7 +109,7 @@ const login = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('[LOGIN] Error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

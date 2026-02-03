@@ -17,10 +17,12 @@ DELETE FROM users;
 
 -- ============================================================
 -- 1. USERS (Admin + User contoh)
--- Password untuk SEMUA: admin123 (bcrypt hash)
+-- PENTING: Setelah import seed, jalankan: cd backend && npm run seed:admin
+-- Agar admin bisa login: adminSFL@gmail.com / admin123
+-- User Budi & Siti password: admin123
 -- ============================================================
 INSERT INTO users (id, name, email, password, role, created_at) VALUES
-(1, 'Admin Science For Life', 'admin@scienceforlife.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'admin', NOW()),
+(1, 'Admin Science For Life', 'adminSFL@gmail.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'admin', NOW()),
 (2, 'Budi Santoso', 'budi@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'user', NOW()),
 (3, 'Siti Aminah', 'siti@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'user', NOW());
 

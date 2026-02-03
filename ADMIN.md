@@ -13,8 +13,15 @@ Agar bisa melihat **contoh tampilan lengkap** (modul, sub modul, materi, soal, p
 
    Atau lewat phpMyAdmin: pilih database `science_for_life` → Import → pilih file `database/seed.sql` → Go.
 
+**Setelah import seed, wajib jalankan script agar admin bisa login:**
+   ```bash
+   cd backend
+   npm run seed:admin
+   ```
+   Script ini mengatur password admin (`adminSFL@gmail.com` / `admin123`) dengan hash yang benar.
+
 **Isi seed:**
-- **users**: 1 admin + 2 user (Budi, Siti). Semua password: `admin123`.
+- **users**: 1 admin (adminSFL@gmail.com) + 2 user (Budi, Siti). Password admin harus di-set dengan `npm run seed:admin`.
 - **modules**: 3 modul (Biologi Dasar, Fisika Sehari-hari, Kimia Lingkungan).
 - **sub_modules**: 7 sub modul dengan deskripsi & passing grade.
 - **materials**: 7 materi (deskripsi + beberapa video URL).
@@ -27,19 +34,19 @@ Setelah seed dijalankan, buka aplikasi untuk melihat dashboard berisi modul, det
 
 ## 1. Login sebagai Admin
 
-### Akun default setelah import database
+### Akun admin (setelah jalankan seed + seed:admin)
 
-Setelah Anda menjalankan `schema.sql` dan `seed.sql`, gunakan akun berikut:
+Setelah menjalankan `schema.sql`, `seed.sql`, dan **`npm run seed:admin`** di folder backend, gunakan:
 
 | Field    | Nilai |
 |----------|--------|
-| **Email** | `admin@scienceforlife.com` |
+| **Email** | `adminSFL@gmail.com` |
 | **Password** | `admin123` |
 
 **Langkah:**
 1. Buka aplikasi (misal: http://localhost:3000)
 2. Klik **Login**
-3. Masukkan email: `admin@scienceforlife.com`
+3. Masukkan email: `adminSFL@gmail.com`
 4. Masukkan password: `admin123`
 5. Klik **Login**
 
@@ -97,19 +104,15 @@ WHERE id = 1;
 
 ---
 
-## 4. Jika password admin tidak bisa (hash tidak cocok)
+## 4. Jika password admin tidak bisa / lupa
 
-Jalankan script ini di **backend** untuk menghasilkan hash password baru:
+Jalankan script buat/update admin (password akan di-set ke `admin123`):
 
 ```bash
 cd backend
-node -e "const bcrypt = require('bcryptjs'); console.log(bcrypt.hashSync('admin123', 10));"
+npm run seed:admin
 ```
 
-Copy hash yang keluar, lalu di MySQL:
+Atau: `node scripts/seedAdmin.js`
 
-```sql
-UPDATE users SET password = 'HASH_YANG_DICOPY' WHERE email = 'admin@scienceforlife.com';
-```
-
-Setelah itu login lagi dengan password `admin123`.
+Ini akan membuat atau meng-update user **adminSFL@gmail.com** dengan password **admin123**. Setelah itu coba login lagi.
