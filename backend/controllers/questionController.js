@@ -35,7 +35,7 @@ const createQuestion = async (req, res) => {
   try {
     const { sub_module_id, type, question_type, question_text, correct_answer, options } = req.body;
 
-    if (!sub_module_id || !type || !question_type || !question_text || !correct_answer) {
+    if (!sub_module_id || !type || !question_text || !correct_answer) {
       return res.status(400).json({ message: 'All required fields must be provided' });
     }
 
@@ -43,9 +43,8 @@ const createQuestion = async (req, res) => {
       return res.status(400).json({ message: 'Invalid question type' });
     }
 
-    if (!['choice', 'essay'].includes(question_type)) {
-      return res.status(400).json({ message: 'Invalid question type format' });
-    }
+    // Force all questions to be multiple choice
+    const finalQuestionType = 'choice';
 
     // Check if sub module exists
     const [subModules] = await pool.execute(
@@ -60,14 +59,23 @@ const createQuestion = async (req, res) => {
     // Insert question
     const [result] = await pool.execute(
       'INSERT INTO questions (sub_module_id, type, question_type, question_text, correct_answer) VALUES (?, ?, ?, ?, ?)',
-      [sub_module_id, type, question_type, question_text, correct_answer]
+      [sub_module_id, type, finalQuestionType, question_text, correct_answer]
     );
 
     const questionId = result.insertId;
 
     // Insert options if choice type
-    if (question_type === 'choice' && options && Array.isArray(options)) {
-      for (const option of options) {
+    if (options && Array.isArray(options)) {
+      // Only keep up to 4 options and ensure labels A-D
+      const labels = ['A', 'B', 'C', 'D'];
+      const normalized = options
+        .slice(0, 4)
+        .map((opt, idx) => ({
+          label: labels[idx],
+          text: opt.text
+        }));
+
+      for (const option of normalized) {
         await pool.execute(
           'INSERT INTO question_options (question_id, option_label, option_text) VALUES (?, ?, ?)',
           [questionId, option.label, option.text]
@@ -81,13 +89,11 @@ const createQuestion = async (req, res) => {
       [questionId]
     );
 
-    if (newQuestion[0].question_type === 'choice') {
-      const [questionOptions] = await pool.execute(
-        'SELECT * FROM question_options WHERE question_id = ? ORDER BY option_label ASC',
-        [questionId]
-      );
-      newQuestion[0].options = questionOptions;
-    }
+    const [questionOptions] = await pool.execute(
+      'SELECT * FROM question_options WHERE question_id = ? ORDER BY option_label ASC',
+      [questionId]
+    );
+    newQuestion[0].options = questionOptions;
 
     res.status(201).json({
       message: 'Question created successfully',
@@ -123,13 +129,21 @@ const updateQuestion = async (req, res) => {
       ]
     );
 
-    // Update options if choice type
-    if (questions[0].question_type === 'choice' && options && Array.isArray(options)) {
+    // Update options (all questions are multiple choice)
+    if (options && Array.isArray(options)) {
       // Delete old options
       await pool.execute('DELETE FROM question_options WHERE question_id = ?', [id]);
 
-      // Insert new options
-      for (const option of options) {
+      // Normalize to 4 options A-D
+      const labels = ['A', 'B', 'C', 'D'];
+      const normalized = options
+        .slice(0, 4)
+        .map((opt, idx) => ({
+          label: labels[idx],
+          text: opt.text
+        }));
+
+      for (const option of normalized) {
         await pool.execute(
           'INSERT INTO question_options (question_id, option_label, option_text) VALUES (?, ?, ?)',
           [id, option.label, option.text]
@@ -142,13 +156,11 @@ const updateQuestion = async (req, res) => {
       [id]
     );
 
-    if (updatedQuestion[0].question_type === 'choice') {
-      const [questionOptions] = await pool.execute(
-        'SELECT * FROM question_options WHERE question_id = ? ORDER BY option_label ASC',
-        [id]
-      );
-      updatedQuestion[0].options = questionOptions;
-    }
+    const [questionOptions] = await pool.execute(
+      'SELECT * FROM question_options WHERE question_id = ? ORDER BY option_label ASC',
+      [id]
+    );
+    updatedQuestion[0].options = questionOptions;
 
     res.json({
       message: 'Question updated successfully',
@@ -199,6 +211,8 @@ const submitAnswers = async (req, res) => {
     let correctCount = 0;
     let totalQuestions = 0;
 
+    const details = [];
+
     // Process each answer
     for (const answer of answers) {
       const { question_id, user_answer } = answer;
@@ -216,12 +230,8 @@ const submitAnswers = async (req, res) => {
 
       let isCorrect = false;
 
-      if (question.question_type === 'choice') {
-        isCorrect = user_answer?.toUpperCase().trim() === question.correct_answer?.toUpperCase().trim();
-      } else {
-        // For essay, we'll mark as correct if answer is provided (manual grading can be added later)
-        isCorrect = user_answer && user_answer.trim().length > 0;
-      }
+      // All questions are multiple choice
+      isCorrect = user_answer?.toUpperCase().trim() === question.correct_answer?.toUpperCase().trim();
 
       if (isCorrect) correctCount++;
 
@@ -230,6 +240,21 @@ const submitAnswers = async (req, res) => {
         'INSERT INTO user_answers (user_id, question_id, test_type, user_answer, is_correct) VALUES (?, ?, ?, ?, ?)',
         [userId, question_id, test_type, user_answer, isCorrect]
       );
+
+      // Load options for review
+      const [options] = await pool.execute(
+        'SELECT option_label, option_text FROM question_options WHERE question_id = ? ORDER BY option_label ASC',
+        [question_id]
+      );
+
+      details.push({
+        question_id,
+        question_text: question.question_text,
+        options,
+        user_answer,
+        correct_answer: question.correct_answer,
+        is_correct: isCorrect
+      });
     }
 
     const score = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
@@ -282,12 +307,21 @@ const submitAnswers = async (req, res) => {
       );
     }
 
-    res.json({
-      message: 'Answers submitted successfully',
-      score,
-      correctCount,
-      totalQuestions
-    });
+    if (test_type === 'pretest') {
+      // Untuk pretest, tidak perlu mengirim detail ke user (nilai disimpan di database saja)
+      return res.json({
+        message: 'Pretest submitted successfully'
+      });
+    } else {
+      // Untuk postest, kirimkan detail untuk review hasil
+      return res.json({
+        message: 'Postest submitted successfully',
+        score,
+        correctCount,
+        totalQuestions,
+        details
+      });
+    }
   } catch (error) {
     console.error('Submit answers error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });

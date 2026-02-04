@@ -10,7 +10,9 @@ const UserManagement = () => {
     name: '',
     email: '',
     role: 'user',
-    password: ''
+    password: '',
+    job: '',
+    address: ''
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -54,7 +56,9 @@ const UserManagement = () => {
       name: user.name,
       email: user.email,
       role: user.role,
-      password: ''
+      password: '',
+      job: user.job || '',
+      address: user.address || ''
     });
     setShowForm(true);
   };
@@ -71,7 +75,7 @@ const UserManagement = () => {
   };
 
   const resetForm = () => {
-    setFormData({ name: '', email: '', role: 'user', password: '' });
+    setFormData({ name: '', email: '', role: 'user', password: '', job: '', address: '' });
     setEditingUser(null);
     setShowForm(false);
   };
@@ -132,6 +136,32 @@ const UserManagement = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold mb-2">
+                  Pekerjaan
+                </label>
+                <input
+                  type="text"
+                  value={formData.job}
+                  onChange={(e) =>
+                    setFormData({ ...formData, job: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Alamat
+                </label>
+                <textarea
+                  value={formData.address}
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  rows="3"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">
                   Password Baru (kosongkan jika tidak ingin mengubah)
                 </label>
                 <input
@@ -173,7 +203,10 @@ const UserManagement = () => {
                   <th className="px-6 py-3 text-left">Nama</th>
                   <th className="px-6 py-3 text-left">Email</th>
                   <th className="px-6 py-3 text-left">Role</th>
+                  <th className="px-6 py-3 text-left">Pekerjaan</th>
+                  <th className="px-6 py-3 text-left">Alamat</th>
                   <th className="px-6 py-3 text-left">Progress</th>
+                  <th className="px-6 py-3 text-left">Rata-rata Pretest</th>
                   <th className="px-6 py-3 text-left">Aksi</th>
                 </tr>
               </thead>
@@ -193,8 +226,17 @@ const UserManagement = () => {
                         {user.role}
                       </span>
                     </td>
+                    <td className="px-6 py-4">{user.job || '-'}</td>
+                    <td className="px-6 py-4 max-w-xs truncate" title={user.address || '-'}>
+                      {user.address || '-'}
+                    </td>
                     <td className="px-6 py-4">
                       {user.total_progress || 0} sub modul
+                    </td>
+                    <td className="px-6 py-4">
+                      {user.avg_pretest_score !== null && user.avg_pretest_score !== undefined
+                        ? `${Math.round(user.avg_pretest_score)}%`
+                        : '-'}
                     </td>
                     <td className="px-6 py-4">
                       <button

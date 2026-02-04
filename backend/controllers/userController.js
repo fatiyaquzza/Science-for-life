@@ -4,8 +4,21 @@ const pool = require('../config/database');
 const getAllUsers = async (req, res) => {
   try {
     const [users] = await pool.execute(
-      `SELECT id, name, email, role, created_at,
-       (SELECT COUNT(*) FROM user_progress WHERE user_id = users.id) as total_progress
+      `SELECT 
+         id, 
+         name, 
+         email, 
+         role, 
+         job,
+         address,
+         created_at,
+         (SELECT COUNT(*) FROM user_progress WHERE user_id = users.id) as total_progress,
+         (
+           SELECT 
+             COALESCE(AVG(pretest_score), 0) 
+           FROM user_progress 
+           WHERE user_id = users.id AND pretest_done = TRUE
+         ) as avg_pretest_score
        FROM users
        ORDER BY created_at DESC`
     );
@@ -22,7 +35,7 @@ const getUserById = async (req, res) => {
     const { id } = req.params;
 
     const [users] = await pool.execute(
-      'SELECT id, name, email, role, created_at FROM users WHERE id = ?',
+      'SELECT id, name, email, role, job, address, created_at FROM users WHERE id = ?',
       [id]
     );
 
@@ -40,7 +53,7 @@ const getUserById = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, role, password } = req.body;
+    const { name, email, role, password, job, address } = req.body;
 
     // Check if user exists
     const [users] = await pool.execute(
@@ -80,6 +93,16 @@ const updateUser = async (req, res) => {
       updateValues.push(role);
     }
 
+    if (job !== undefined) {
+      updateFields.push('job = ?');
+      updateValues.push(job);
+    }
+
+    if (address !== undefined) {
+      updateFields.push('address = ?');
+      updateValues.push(address);
+    }
+
     if (password) {
       if (password.length < 6) {
         return res.status(400).json({ message: 'Password must be at least 6 characters' });
@@ -101,7 +124,7 @@ const updateUser = async (req, res) => {
     );
 
     const [updatedUser] = await pool.execute(
-      'SELECT id, name, email, role, created_at FROM users WHERE id = ?',
+      'SELECT id, name, email, role, job, address, created_at FROM users WHERE id = ?',
       [id]
     );
 
