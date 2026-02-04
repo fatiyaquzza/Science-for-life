@@ -121,48 +121,37 @@ const Result = () => {
                       <p className="text-gray-800 mb-4">{item.question_text}</p>
 
                       <div className="space-y-2">
-                        {item.options?.map((opt) => {
-                          const isUserAnswer =
-                            item.user_answer &&
-                            item.user_answer.toUpperCase() ===
-                              opt.option_label.toUpperCase();
-                          const isRightAnswer =
-                            item.correct_answer &&
-                            item.correct_answer.toUpperCase() ===
-                              opt.option_label.toUpperCase();
+                      {item.options?.map((opt) => {
+  const isUserAnswer =
+    item.user_answer &&
+    item.user_answer.toUpperCase() ===
+      opt.option_label.toUpperCase();
 
-                          return (
-                            <div
-                              key={opt.option_label}
-                              className={`flex items-center justify-between px-4 py-2 rounded border ${
-                                isRightAnswer
-                                  ? 'border-green-500 bg-green-50'
-                                  : isUserAnswer
-                                  ? 'border-blue-500 bg-blue-50'
-                                  : 'border-gray-200 bg-white'
-                              }`}
-                            >
-                              <span className="text-gray-800">
-                                <span className="font-semibold mr-1">
-                                  {opt.option_label}.
-                                </span>
-                                {opt.option_text}
-                              </span>
-                              <div className="flex items-center gap-2">
-                                {isRightAnswer && (
-                                  <span className="text-green-600 text-sm font-bold">
-                                    ✓ Kunci
-                                  </span>
-                                )}
-                                {isUserAnswer && !isRightAnswer && (
-                                  <span className="text-blue-600 text-xs font-semibold">
-                                    Jawaban Anda
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })}
+  return (
+    <div
+      key={opt.option_label}
+      className={`flex items-center px-4 py-2 rounded border ${
+        isUserAnswer
+          ? 'border-blue-500 bg-blue-50'
+          : 'border-gray-200 bg-white'
+      }`}
+    >
+      <span className="text-gray-800">
+        <span className="font-semibold mr-1">
+          {opt.option_label}.
+        </span>
+        {opt.option_text}
+      </span>
+
+      {isUserAnswer && (
+        <span className="ml-auto text-blue-600 text-xs font-semibold">
+          Jawaban Anda
+        </span>
+      )}
+    </div>
+  );
+})}
+
                       </div>
                     </div>
                   );
