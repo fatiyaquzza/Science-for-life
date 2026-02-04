@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
-  const { user, logout, isAdmin } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,56 +11,56 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-primary text-white shadow-lg">
+    <nav className="bg-primary text-white shadow-lg fixed w-full z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-        <Link
-  to={
-    user
-      ? isAdmin
-        ? "/admin/dashboard"
-        : "/dashboard"
-      : "/"
-  }
-  className="text-2xl font-bold"
->
-  Science For Life
-</Link>
+          {/* Logo */}
+          <Link to="/" className="text-2xl font-bold">
+            Science For Life
+          </Link>
 
+          {/* Right Menu */}
           <div className="flex items-center gap-6">
-            {user ? (
+            {!user ? (
               <>
-                {isAdmin && (
-                  <Link
-                    to="/admin/dashboard"
-                    className="hover:text-secondary transition-colors"
-                  >
-                    Admin Panel
-                  </Link>
-                )}
+                <a
+                  href="#tentang-kami"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Tentang Kami
+                </a>
 
-                <span className="text-light">Hi, {user.name}</span>
+                <a
+                  href="#program-unggulan"
+                  className="hover:text-secondary transition-colors"
+                >
+                  Program Unggulan
+                </a>
+
+                <a
+                  href="#faq"
+                  className="hover:text-secondary transition-colors"
+                >
+                  FAQ
+                </a>
+
+                <Link
+                  to="/login"
+                  className="bg-secondary hover:bg-opacity-80 px-4 py-2 rounded transition-colors"
+                >
+                  Mulai Belajar
+                </Link>
+              </>
+            ) : (
+              <>
+                <span className="text-light font-medium">Hi, {user.name}</span>
+
                 <button
                   onClick={handleLogout}
                   className="bg-secondary hover:bg-opacity-80 px-4 py-2 rounded transition-colors"
                 >
                   Logout
                 </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="hover:text-secondary transition-colors"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="bg-secondary hover:bg-opacity-80 px-4 py-2 rounded transition-colors"
-                >
-                  Register
-                </Link>
               </>
             )}
           </div>
