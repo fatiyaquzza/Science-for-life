@@ -25,17 +25,27 @@ const chat = async (req, res) => {
     const subModule = subModules[0];
 
     // Initialize Gemini AI
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({
+        message: 'GEMINI_API_KEY is not configured on the server'
+      });
+    }
+
+    const genAI = new GoogleGenerativeAI(apiKey);
+
+    // Nama model diambil dari ENV agar bisa disesuaikan dengan akun Anda.
+    // Contoh yang umum: "gemini-pro", "gemini-1.5-flash-latest", "gemini-1.5-pro-latest"
+    const modelName = process.env.GEMINI_MODEL || 'gemini-pro';
+    const model = genAI.getGenerativeModel({ model: modelName });
 
     // Create context prompt
-    const contextPrompt = `Kamu adalah asisten AI yang membantu siswa belajar tentang materi "${subModule.name}" dari modul "${subModule.module_name}". 
+    const contextPrompt = `Kamu adalah asisten pembelajaran untuk materi "${subModule.name}" dari modul "${subModule.module_name}".
+Deskripsi materi: ${subModule.description || 'Tidak ada deskripsi tersedia'}.
+Tugasmu adalah membantu user memahami materi ini dengan menjawab pertanyaan mereka seputar topik tersebut.
+Jawablah dengan bahasa Indonesia yang jelas, ramah, dan mudah dipahami. Jika pertanyaan tidak berkaitan dengan materi ini, jelaskan secara sopan dan arahkan kembali ke topik materi.`;
 
-Deskripsi materi: ${subModule.description || 'Tidak ada deskripsi tersedia'}
-
-Jawab pertanyaan siswa dengan jelas, ramah, dan membantu. Jika pertanyaan tidak terkait dengan materi ini, arahkan siswa kembali ke topik materi. Gunakan bahasa Indonesia yang mudah dipahami.`;
-
-    const prompt = `${contextPrompt}\n\nPertanyaan siswa: ${message}`;
+    const prompt = `${contextPrompt}\n\nPertanyaan user: ${message}`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -47,6 +57,16 @@ Jawab pertanyaan siswa dengan jelas, ramah, dan membantu. Jika pertanyaan tidak 
     });
   } catch (error) {
     console.error('AI Chat error:', error);
+
+    // Tangani kasus model 404 dengan pesan yang lebih jelas ke frontend
+    if (error.message && error.message.includes('404 Not Found')) {
+      return res.status(500).json({
+        message: 'Model Gemini tidak ditemukan atau tidak mendukung generateContent. ' +
+          'Silakan cek nama model di Google AI Studio dan set ENV GEMINI_MODEL sesuai nama model yang tersedia.',
+        error: error.message
+      });
+    }
+
     res.status(500).json({ 
       message: 'Error communicating with AI', 
       error: error.message 

@@ -6,6 +6,8 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    job: '',
+    address: '',
     password: '',
     confirmPassword: ''
   });
@@ -24,8 +26,8 @@ const Register = () => {
     setError('');
     setLoading(true);
 
-    if (!formData.name || !formData.email || !formData.password) {
-      setError('Semua field harus diisi');
+    if (!formData.name || !formData.email || !formData.password || !formData.job || !formData.address) {
+      setError('Semua field harus diisi (termasuk pekerjaan dan alamat)');
       setLoading(false);
       return;
     }
@@ -45,7 +47,9 @@ const Register = () => {
     const result = await register(
       formData.name,
       formData.email,
-      formData.password
+      formData.password,
+      formData.job,
+      formData.address
     );
 
     if (result.success) {
@@ -81,6 +85,34 @@ const Register = () => {
               value={formData.name}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">
+              Pekerjaan
+            </label>
+            <input
+              type="text"
+              name="job"
+              value={formData.job}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold mb-2">
+              Alamat
+            </label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              rows="3"
               required
             />
           </div>

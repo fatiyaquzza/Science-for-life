@@ -11,9 +11,10 @@ const Result = () => {
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const score = location.state?.score;
-  const correctCount = location.state?.correctCount;
-  const totalQuestions = location.state?.totalQuestions;
+  const score = location.state?.score ?? 0;
+  const correctCount = location.state?.correctCount ?? 0;
+  const totalQuestions = location.state?.totalQuestions ?? 0;
+  const details = location.state?.details ?? [];
 
   useEffect(() => {
     Promise.all([
@@ -44,6 +45,7 @@ const Result = () => {
         <h1 className="text-3xl font-bold text-primary mb-8">Hasil Postest</h1>
 
         <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+          {/* Status kelulusan */}
           {isPassed ? (
             <>
               <div className="text-6xl mb-4">🎉</div>
@@ -66,15 +68,16 @@ const Result = () => {
             </>
           )}
 
+          {/* Ringkasan nilai */}
           <div className="bg-light rounded-lg p-6 mb-6">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-2xl font-bold text-primary">{score || 0}%</p>
+                <p className="text-2xl font-bold text-primary">{score}%</p>
                 <p className="text-sm text-gray-600">Nilai</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-primary">
-                  {correctCount || 0}/{totalQuestions || 0}
+                  {correctCount}/{totalQuestions}
                 </p>
                 <p className="text-sm text-gray-600">Benar</p>
               </div>
@@ -87,18 +90,91 @@ const Result = () => {
             </div>
           </div>
 
-          {isPassed ? (
-            <div className="space-y-4">
-              <ChatAI subModuleId={parseInt(id)} subModuleName={subModule?.name} />
+          {/* Review detail soal & jawaban */}
+          {details.length > 0 && (
+            <div className="mt-8 text-left">
+              <h2 className="text-2xl font-bold text-primary mb-4">
+                Review Soal dan Jawaban
+              </h2>
+              <div className="space-y-6">
+                {details.map((item, idx) => {
+                  const isCorrect = item.is_correct;
+                  return (
+                    <div
+                      key={item.question_id || idx}
+                      className="bg-light rounded-lg p-5 border border-gray-200"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-lg font-semibold text-primary">
+                          Soal {idx + 1}
+                        </h3>
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                            isCorrect
+                              ? 'bg-green-100 text-green-700'
+                              : 'bg-red-100 text-red-700'
+                          }`}
+                        >
+                          {isCorrect ? 'Benar' : 'Salah'}
+                        </span>
+                      </div>
+                      <p className="text-gray-800 mb-4">{item.question_text}</p>
+
+                      <div className="space-y-2">
+                        {item.options?.map((opt) => {
+                          const isUserAnswer =
+                            item.user_answer &&
+                            item.user_answer.toUpperCase() ===
+                              opt.option_label.toUpperCase();
+                          const isRightAnswer =
+                            item.correct_answer &&
+                            item.correct_answer.toUpperCase() ===
+                              opt.option_label.toUpperCase();
+
+                          return (
+                            <div
+                              key={opt.option_label}
+                              className={`flex items-center justify-between px-4 py-2 rounded border ${
+                                isRightAnswer
+                                  ? 'border-green-500 bg-green-50'
+                                  : isUserAnswer
+                                  ? 'border-blue-500 bg-blue-50'
+                                  : 'border-gray-200 bg-white'
+                              }`}
+                            >
+                              <span className="text-gray-800">
+                                <span className="font-semibold mr-1">
+                                  {opt.option_label}.
+                                </span>
+                                {opt.option_text}
+                              </span>
+                              <div className="flex items-center gap-2">
+                                {isRightAnswer && (
+                                  <span className="text-green-600 text-sm font-bold">
+                                    ✓ Kunci
+                                  </span>
+                                )}
+                                {isUserAnswer && !isRightAnswer && (
+                                  <span className="text-blue-600 text-xs font-semibold">
+                                    Jawaban Anda
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          ) : (
-            <button
-              onClick={() => navigate(`/postest/${id}`)}
-              className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
-            >
-              Ulangi Postest
-            </button>
           )}
+
+          {/* Chat AI selalu tampil di bawah hasil postest */}
+          <div className="mt-10">
+            <ChatAI subModuleId={parseInt(id)} subModuleName={subModule?.name} />
+          </div>
 
           <div className="mt-6">
             <button

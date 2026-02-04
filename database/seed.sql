@@ -21,10 +21,10 @@ DELETE FROM users;
 -- Agar admin bisa login: adminSFL@gmail.com / admin123
 -- User Budi & Siti password: admin123
 -- ============================================================
-INSERT INTO users (id, name, email, password, role, created_at) VALUES
-(1, 'Admin Science For Life', 'adminSFL@gmail.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'admin', NOW()),
-(2, 'Budi Santoso', 'budi@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'user', NOW()),
-(3, 'Siti Aminah', 'siti@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'user', NOW());
+INSERT INTO users (id, name, email, password, role, job, address, created_at) VALUES
+(1, 'Admin Science For Life', 'adminSFL@gmail.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'admin', 'Admin', 'Kantor Pusat Science For Life', NOW()),
+(2, 'Budi Santoso', 'budi@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'user', 'Siswa', 'Jl. Mawar No. 1, Jakarta', NOW()),
+(3, 'Siti Aminah', 'siti@example.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'user', 'Mahasiswa', 'Jl. Melati No. 2, Bandung', NOW());
 
 -- ============================================================
 -- 2. MODULES (Modul pembelajaran)
@@ -66,14 +66,12 @@ INSERT INTO materials (id, sub_module_id, description, video_url, file_url, crea
 -- Sub modul 1: Struktur dan Fungsi Sel
 -- ============================================================
 INSERT INTO questions (id, sub_module_id, type, question_type, question_text, correct_answer, created_at) VALUES
--- Pretest Sub Modul 1
+      -- Pretest Sub Modul 1
 (1, 1, 'pretest', 'choice', 'Bagian sel yang mengendalikan aktivitas sel dan menyimpan DNA adalah...', 'C', NOW()),
 (2, 1, 'pretest', 'choice', 'Organel yang berfungsi sebagai "pusat energi" sel adalah...', 'B', NOW()),
-(3, 1, 'pretest', 'essay', 'Jelaskan secara singkat perbedaan antara sel hewan dan sel tumbuhan!', 'Sel tumbuhan memiliki dinding sel dan kloroplas; sel hewan tidak.', NOW()),
--- Postest Sub Modul 1
+      -- Postest Sub Modul 1
 (4, 1, 'postest', 'choice', 'Membran sel berfungsi untuk...', 'A', NOW()),
-(5, 1, 'postest', 'choice', 'Unit terkecil kehidupan yang mampu melakukan proses kehidupan disebut...', 'B', NOW()),
-(6, 1, 'postest', 'essay', 'Sebutkan 3 organel sel dan fungsinya!', 'Contoh: Nukleus (mengendalikan sel), Mitokondria (menghasilkan energi), Ribosom (sintesis protein).', NOW());
+(5, 1, 'postest', 'choice', 'Unit terkecil kehidupan yang mampu melakukan proses kehidupan disebut...', 'B', NOW());
 
 -- Options untuk soal choice (pretest 1)
 INSERT INTO question_options (question_id, option_label, option_text) VALUES
@@ -133,8 +131,7 @@ INSERT INTO question_options (question_id, option_label, option_text) VALUES
 INSERT INTO questions (id, sub_module_id, type, question_type, question_text, correct_answer, created_at) VALUES
 (11, 4, 'pretest', 'choice', 'Hukum Newton I menyatakan bahwa...', 'A', NOW()),
 (12, 4, 'pretest', 'choice', 'Rumus Hukum Newton II adalah...', 'C', NOW()),
-(13, 4, 'postest', 'choice', 'Ketika kita mendorong dinding, dinding mendorong kita kembali. Ini adalah contoh...', 'B', NOW()),
-(14, 4, 'postest', 'essay', 'Jelaskan perbedaan antara gaya dan massa!', 'Gaya adalah tarikan atau dorongan (satuan Newton); massa adalah jumlah zat dalam benda (satuan kg).', NOW());
+(13, 4, 'postest', 'choice', 'Ketika kita mendorong dinding, dinding mendorong kita kembali. Ini adalah contoh...', 'B', NOW());
 
 INSERT INTO question_options (question_id, option_label, option_text) VALUES
 (11, 'A', 'Benda tetap diam atau bergerak lurus beraturan jika resultan gaya = 0'),

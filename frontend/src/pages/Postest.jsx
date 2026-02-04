@@ -9,6 +9,7 @@ const Postest = () => {
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     api
@@ -26,6 +27,7 @@ const Postest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     setSubmitting(true);
 
     const answerArray = Object.entries(answers).map(([questionId, answer]) => ({
@@ -44,11 +46,13 @@ const Postest = () => {
         state: {
           score: res.data.score,
           correctCount: res.data.correctCount,
-          totalQuestions: res.data.totalQuestions
+          totalQuestions: res.data.totalQuestions,
+          details: res.data.details || []
         }
       });
     } catch (error) {
-      alert('Terjadi kesalahan saat menyimpan jawaban');
+      console.error(error);
+      setError('Terjadi kesalahan saat menyimpan jawaban');
       setSubmitting(false);
     }
   };
@@ -65,6 +69,12 @@ const Postest = () => {
     <div className="min-h-screen bg-light py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-3xl font-bold text-primary mb-8">Postest</h1>
+
+        {error && (
+          <div className="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="space-y-8">

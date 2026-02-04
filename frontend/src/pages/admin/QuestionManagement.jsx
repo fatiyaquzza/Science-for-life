@@ -14,7 +14,6 @@ const QuestionManagement = () => {
   const [formData, setFormData] = useState({
     sub_module_id: '',
     type: 'pretest',
-    question_type: 'choice',
     question_text: '',
     correct_answer: '',
     options: [
@@ -66,13 +65,15 @@ const QuestionManagement = () => {
     const dataToSend = {
       sub_module_id: formData.sub_module_id,
       type: formData.type,
-      question_type: formData.question_type,
+      question_type: 'choice',
       question_text: formData.question_text,
       correct_answer: formData.correct_answer,
-      options:
-        formData.question_type === 'choice'
-          ? formData.options.filter((opt) => opt.text.trim())
-          : []
+      options: formData.options
+        .map((opt, idx) => ({
+          label: opt.label || String.fromCharCode(65 + idx),
+          text: opt.text
+        }))
+        .slice(0, 4)
     };
 
     try {
@@ -96,7 +97,6 @@ const QuestionManagement = () => {
     setFormData({
       sub_module_id: question.sub_module_id,
       type: question.type,
-      question_type: question.question_type,
       question_text: question.question_text,
       correct_answer: question.correct_answer,
       options: question.options
@@ -129,7 +129,6 @@ const QuestionManagement = () => {
     setFormData({
       sub_module_id: selectedSubModuleId,
       type: selectedType,
-      question_type: 'choice',
       question_text: '',
       correct_answer: '',
       options: [
@@ -252,24 +251,6 @@ const QuestionManagement = () => {
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold mb-2">
-                  Tipe Soal
-                </label>
-                <select
-                  value={formData.question_type}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      question_type: e.target.value
-                    })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                >
-                  <option value="choice">Pilihan Ganda</option>
-                  <option value="essay">Essay</option>
-                </select>
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2">
                   Pertanyaan
                 </label>
                 <textarea
@@ -283,60 +264,44 @@ const QuestionManagement = () => {
                 />
               </div>
 
-              {formData.question_type === 'choice' && (
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-semibold mb-2">
-                    Opsi Jawaban
-                  </label>
-                  {formData.options.map((option, index) => (
-                    <div key={index} className="mb-2">
-                      <input
-                        type="text"
-                        value={option.text}
-                        onChange={(e) => updateOption(index, e.target.value)}
-                        placeholder={`Opsi ${option.label}`}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                        required={formData.question_type === 'choice'}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Opsi Jawaban (A, B, C, D)
+                </label>
+                {formData.options.map((option, index) => (
+                  <div key={index} className="mb-2 flex items-center gap-2">
+                    <span className="w-8 font-semibold">{option.label}.</span>
+                    <input
+                      type="text"
+                      value={option.text}
+                      onChange={(e) => updateOption(index, e.target.value)}
+                      placeholder={`Opsi ${option.label}`}
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
+                      required
+                    />
+                  </div>
+                ))}
+              </div>
 
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold mb-2">
                   Kunci Jawaban
                 </label>
-                {formData.question_type === 'choice' ? (
-                  <select
-                    value={formData.correct_answer}
-                    onChange={(e) =>
-                      setFormData({ ...formData, correct_answer: e.target.value })
-                    }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                    required
-                  >
-                    <option value="">-- Pilih Jawaban --</option>
-                    {formData.options
-                      .filter((opt) => opt.text.trim())
-                      .map((opt) => (
-                        <option key={opt.label} value={opt.label}>
-                          {opt.label}
-                        </option>
-                      ))}
-                  </select>
-                ) : (
-                  <textarea
-                    value={formData.correct_answer}
-                    onChange={(e) =>
-                      setFormData({ ...formData, correct_answer: e.target.value })
-                    }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                    rows="3"
-                    placeholder="Contoh jawaban yang benar"
-                    required
-                  />
-                )}
+                <select
+                  value={formData.correct_answer}
+                  onChange={(e) =>
+                    setFormData({ ...formData, correct_answer: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                  required
+                >
+                  <option value="">-- Pilih Jawaban --</option>
+                  {formData.options.map((opt) => (
+                    <option key={opt.label} value={opt.label}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <button
@@ -365,9 +330,7 @@ const QuestionManagement = () => {
                   <tr key={question.id} className="border-t">
                     <td className="px-6 py-4">{question.question_text}</td>
                     <td className="px-6 py-4">
-                      {question.question_type === 'choice'
-                        ? 'Pilihan Ganda'
-                        : 'Essay'}
+                      {'Pilihan Ganda'}
                     </td>
                     <td className="px-6 py-4">
                       <button

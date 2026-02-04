@@ -4,10 +4,10 @@ const pool = require('../config/database');
 
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, job, address } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: 'All fields are required' });
+    if (!name || !email || !password || !job || !address) {
+      return res.status(400).json({ message: 'All fields are required (name, email, password, job, address)' });
     }
 
     if (password.length < 6) {
@@ -29,8 +29,8 @@ const register = async (req, res) => {
 
     // Insert user
     const [result] = await pool.execute(
-      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-      [name, email, hashedPassword]
+      'INSERT INTO users (name, email, password, job, address) VALUES (?, ?, ?, ?, ?)',
+      [name, email, hashedPassword, job, address]
     );
 
     // Generate token
@@ -47,6 +47,8 @@ const register = async (req, res) => {
         id: result.insertId,
         name,
         email,
+        job,
+        address,
         role: 'user'
       }
     });
@@ -105,6 +107,8 @@ const login = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        job: user.job,
+        address: user.address,
         role: user.role
       }
     });
@@ -117,7 +121,7 @@ const login = async (req, res) => {
 const getMe = async (req, res) => {
   try {
     const [users] = await pool.execute(
-      'SELECT id, name, email, role, created_at FROM users WHERE id = ?',
+      'SELECT id, name, email, role, job, address, created_at FROM users WHERE id = ?',
       [req.user.id]
     );
 
