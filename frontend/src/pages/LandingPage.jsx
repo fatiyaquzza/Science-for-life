@@ -39,7 +39,7 @@ const LandingPage = () => {
             </Link>
           ) : (
             <Link
-              to="/register"
+              to="/login"
               className="bg-white text-primary px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors inline-block"
             >
               Mulai Belajar
