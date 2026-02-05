@@ -115,22 +115,26 @@ const LandingPage = () => {
     {
       name: "Dr. Ahmad Rahman",
       role: "Founder & Lead Educator",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop",
     },
     {
       name: "Siti Nurhaliza, M.Sc",
       role: "Curriculum Developer",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop",
     },
     {
       name: "Budi Santoso",
       role: "Technology Lead",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
     },
     {
       name: "Dewi Kusuma",
       role: "Community Manager",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
+      image:
+        "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop",
     },
   ];
 
@@ -149,15 +153,15 @@ const LandingPage = () => {
         }}
       >
         <div className="container mx-auto px-4 relative z-10 flex-1 flex flex-col justify-center">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <div className="text-center max-w-5xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
               Belajar Sains untuk Kehidupan
               <br />
               <span className="bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">
                 yang Lebih Bermakna
               </span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl mb-12 text-green-50/95 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl mb-12 text-green-50/95 max-w-4xl mx-auto leading-relaxed">
               Platform pembelajaran interaktif yang menyingkapkan sains ke dalam
               kehidupan sehari-hari. Belajar dengan cara yang menakjubkan dan
               lebih bermakna.
@@ -201,11 +205,11 @@ const LandingPage = () => {
 
       {/* About Section */}
       <section id="tentang-kami" className="py-24 bg-white scroll-mt-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
               <span className="text-green-600 font-semibold text-sm uppercase tracking-widest">
-                — Tentang
+                — Tentang —
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-6">
                 Science For Life
@@ -263,7 +267,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <span className="text-green-300 font-semibold text-sm uppercase tracking-widest">
-              — Terbukti
+              — Terbukti —
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
               PROGRAM UNGGULAN
@@ -362,75 +366,34 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* CTA Section - Siap Belajar - Organic Green Shape */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="relative">
-            {/* Organic blob shape */}
-            <div
-              className="relative overflow-hidden rounded-[3rem] py-24 px-8 md:py-28 md:px-16"
-              style={{
-                background:
-                  "linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%)",
-                boxShadow:
-                  "0 25px 50px -12px rgba(5, 150, 105, 0.4), inset 0 1px 0 rgba(255,255,255,0.2)",
-              }}
-            >
-              {/* Decorative organic shapes */}
-              <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-green-900/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
-
-              <div className="relative z-10 text-center text-white">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                  Siap untuk belajar?
-                </h2>
-                <p className="text-xl md:text-2xl text-green-50 mb-10 max-w-2xl mx-auto">
-                  Mulai Bergabung Sekarang!
-                </p>
-                {user ? (
-                  <Link
-                    to="/dashboard"
-                    className="inline-block bg-white text-green-600 px-12 py-4 rounded-full font-semibold text-lg hover:bg-gray-50 hover:shadow-2xl transition-all duration-300"
-                  >
-                    Mulai Belajar Sekarang
-                  </Link>
-                ) : (
-                  <Link
-                    to="/register"
-                    className="inline-block bg-white text-green-600 px-12 py-4 rounded-full font-semibold text-lg hover:bg-gray-50 hover:shadow-2xl transition-all duration-300"
-                  >
-                    Mulai Bergabung Sekarang
-                  </Link>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Meet Our Team Section */}
       <section
         id="tim-kami"
         className="py-24 bg-gradient-to-b from-white to-gray-50 scroll-mt-20"
+        style={{
+          background:
+            "linear-gradient(160deg, #0d4d3a 0%, #0a3d2e 30%, #062d22 100%)",
+        }}
       >
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <span className="text-green-600 font-semibold text-sm uppercase tracking-widest">
-              — Tim Kami
+            <span className="text-green-300 font-semibold text-sm uppercase tracking-widest">
+              — Tim Kami —
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
-              Meet Our Team
+            <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
+              Kenali Sosok di Balik Layar
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Kenali para ahli di balik Science For Life yang berdedikasi
-              membawa sains lebih dekat dengan kehidupan Anda.
+            <p className="text-green-100/90 text-lg max-w-2xl mx-auto">
+              Inilah tim di balik Science For Life yang berperan dalam
+              menghadirkan sains agar lebih dekat dan bermakna dalam kehidupan
+              sehari-hari.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {teamMembers.map((member, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                className="group bg-white/90 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
               >
                 <div className="aspect-square overflow-hidden">
                   <img
@@ -454,15 +417,12 @@ const LandingPage = () => {
       </section>
 
       {/* Contact Us Section */}
-      <section
-        id="kontak"
-        className="py-24 bg-gray-50 scroll-mt-20"
-      >
+      <section id="kontak" className="py-24 bg-gray-50 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <span className="text-green-600 font-semibold text-sm uppercase tracking-widest">
-                — Hubungi Kami
+                — Hubungi Kami —
               </span>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
                 Contact Us
@@ -493,7 +453,9 @@ const LandingPage = () => {
                     <Phone className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Telepon</h3>
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      Telepon
+                    </h3>
                     <a
                       href="tel:+6281234567890"
                       className="text-gray-600 hover:text-green-600"
@@ -508,9 +470,7 @@ const LandingPage = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Alamat</h3>
-                    <p className="text-gray-600">
-                      Jakarta, Indonesia
-                    </p>
+                    <p className="text-gray-600">Jakarta, Indonesia</p>
                   </div>
                 </div>
               </div>
@@ -530,7 +490,10 @@ const LandingPage = () => {
                         required
                         value={contactForm.name}
                         onChange={(e) =>
-                          setContactForm({ ...contactForm, name: e.target.value })
+                          setContactForm({
+                            ...contactForm,
+                            name: e.target.value,
+                          })
                         }
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
                         placeholder="Nama lengkap Anda"
@@ -545,7 +508,10 @@ const LandingPage = () => {
                         required
                         value={contactForm.email}
                         onChange={(e) =>
-                          setContactForm({ ...contactForm, email: e.target.value })
+                          setContactForm({
+                            ...contactForm,
+                            email: e.target.value,
+                          })
                         }
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
                         placeholder="email@contoh.com"
@@ -560,7 +526,10 @@ const LandingPage = () => {
                       type="text"
                       value={contactForm.subject}
                       onChange={(e) =>
-                        setContactForm({ ...contactForm, subject: e.target.value })
+                        setContactForm({
+                          ...contactForm,
+                          subject: e.target.value,
+                        })
                       }
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
                       placeholder="Subjek pesan (opsional)"
@@ -575,7 +544,10 @@ const LandingPage = () => {
                       rows={5}
                       value={contactForm.message}
                       onChange={(e) =>
-                        setContactForm({ ...contactForm, message: e.target.value })
+                        setContactForm({
+                          ...contactForm,
+                          message: e.target.value,
+                        })
                       }
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all resize-none"
                       placeholder="Tulis saran atau masukan Anda..."
@@ -593,12 +565,129 @@ const LandingPage = () => {
                   )}
                   <button
                     type="submit"
-                    className="w-full md:w-auto flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg"
+                    className="w-full md:w-auto flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg"
                   >
                     <Send className="w-5 h-5" />
                     Kirim Pesan
                   </button>
                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Siap Belajar - Organic Green Shape */}
+      <section className="py-24 bg-gray-50 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="relative max-w-7xl mx-auto">
+            {/* Organic blob shape - rounded corners with subtle curves */}
+            <div
+              className="relative overflow-hidden px-8 md:px-16 py-16 md:py-20 bg-green-600"
+              style={{
+                borderRadius: "50px",
+                boxShadow:
+                  "0 25px 50px -12px rgba(16, 185, 129, 0.25), 0 10px 20px -5px rgba(16, 185, 129, 0.15)",
+              }}
+            >
+              {/* Decorative flowing lines - LEFT side */}
+              <div className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2">
+                <svg
+                  className="w-20 h-24 md:w-24 md:h-28 opacity-25"
+                  viewBox="0 0 100 120"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 30 Q 15 25, 25 30 Q 35 35, 45 30 Q 55 25, 65 30"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <path
+                    d="M5 50 Q 15 45, 25 50 Q 35 55, 45 50 Q 55 45, 65 50"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <path
+                    d="M5 70 Q 15 65, 25 70 Q 35 75, 45 70 Q 55 65, 65 70"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <path
+                    d="M5 90 Q 15 85, 25 90 Q 35 95, 45 90 Q 55 85, 65 90"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+
+              {/* Decorative flowing lines - RIGHT side */}
+              <div className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2">
+                <svg
+                  className="w-20 h-24 md:w-24 md:h-28 opacity-25"
+                  viewBox="0 0 100 120"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M95 30 Q 85 25, 75 30 Q 65 35, 55 30 Q 45 25, 35 30"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <path
+                    d="M95 50 Q 85 45, 75 50 Q 65 55, 55 50 Q 45 45, 35 50"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <path
+                    d="M95 70 Q 85 65, 75 70 Q 65 75, 55 70 Q 45 65, 35 70"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <path
+                    d="M95 90 Q 85 85, 75 90 Q 65 95, 55 90 Q 45 85, 35 90"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+
+              <div className="relative z-10 text-center text-white">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 px-4">
+                  Siap untuk belajar?
+                </h2>
+
+                {user ? (
+                  <Link
+                    to="/dashboard"
+                    className="inline-block bg-white/95 text-green-600 px-8 md:px-10 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base border-2 border-white/50 hover:bg-white hover:border-white transition-all duration-300 hover:scale-105 shadow-lg"
+                  >
+                    Mulai Belajar Sekarang!
+                  </Link>
+                ) : (
+                  <Link
+                    to="/register"
+                    className="inline-block bg-white/95 text-green-600 px-8 md:px-10 py-3 md:py-3.5 rounded-full font-semibold text-sm md:text-base border-2 border-white/50 hover:bg-white hover:border-white transition-all duration-300 hover:scale-105 shadow-lg"
+                  >
+                    Mulai Belajar Sekarang!
+                  </Link>
+                )}
               </div>
             </div>
           </div>

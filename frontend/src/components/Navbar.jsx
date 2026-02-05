@@ -33,16 +33,16 @@ const Navbar = () => {
               Beranda
             </a>
             <a
-              href="/#program-unggulan"
-              className="text-gray-700 hover:text-green-600 transition-colors font-medium"
-            >
-              Modul
-            </a>
-            <a
               href="/#tentang-kami"
               className="text-gray-700 hover:text-green-600 transition-colors font-medium"
             >
               Tentang kami
+            </a>
+            <a
+              href="/#program-unggulan"
+              className="text-gray-700 hover:text-green-600 transition-colors font-medium"
+            >
+              Modul
             </a>
             <a
               href="/#kontak"
@@ -54,13 +54,15 @@ const Navbar = () => {
             {!user ? (
               <Link
                 to="/register"
-                className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+                className="bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 Coba Sekarang!
               </Link>
             ) : (
               <div className="flex items-center gap-4">
-                <span className="text-gray-600 font-medium">Hi, {user.name}</span>
+                <span className="text-gray-600 font-medium">
+                  Hi, {user.name}
+                </span>
                 <Link
                   to="/dashboard"
                   className="bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg font-semibold transition-all duration-300"
