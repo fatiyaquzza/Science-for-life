@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import api from '../../utils/api';
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
 
 const SubModuleManagement = () => {
   const [modules, setModules] = useState([]);
-  const [selectedModuleId, setSelectedModuleId] = useState('');
+  const [selectedModuleId, setSelectedModuleId] = useState("");
   const [subModules, setSubModules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingSubModule, setEditingSubModule] = useState(null);
   const [formData, setFormData] = useState({
-    module_id: '',
-    name: '',
-    description: '',
-    passing_grade: 70
+    module_id: "",
+    name: "",
+    description: "",
+    passing_grade: 70,
   });
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    api.get('/modules').then((res) => {
+    api.get("/modules").then((res) => {
       setModules(res.data.modules);
       setLoading(false);
     });
@@ -46,13 +46,13 @@ const SubModuleManagement = () => {
       if (editingSubModule) {
         await api.put(`/submodules/${editingSubModule.id}`, formData);
       } else {
-        await api.post('/submodules', formData);
+        await api.post("/submodules", formData);
       }
 
       fetchSubModules();
       resetForm();
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert("Terjadi kesalahan");
     } finally {
       setSubmitting(false);
     }
@@ -63,36 +63,36 @@ const SubModuleManagement = () => {
     setFormData({
       module_id: subModule.module_id,
       name: subModule.name,
-      description: subModule.description || '',
-      passing_grade: subModule.passing_grade
+      description: subModule.description || "",
+      passing_grade: subModule.passing_grade,
     });
     setShowForm(true);
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Yakin ingin menghapus sub modul ini?')) return;
+    if (!window.confirm("Yakin ingin menghapus sub modul ini?")) return;
 
     try {
       await api.delete(`/submodules/${id}`);
       fetchSubModules();
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert("Terjadi kesalahan");
     }
   };
 
   const resetForm = () => {
     setFormData({
       module_id: selectedModuleId,
-      name: '',
-      description: '',
-      passing_grade: 70
+      name: "",
+      description: "",
+      passing_grade: 70,
     });
     setEditingSubModule(null);
     setShowForm(false);
   };
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light pb-8 pt-28 px-6">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold text-primary mb-8">
           Manajemen Sub Modul
@@ -123,7 +123,7 @@ const SubModuleManagement = () => {
               onClick={() => setShowForm(!showForm)}
               className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90"
             >
-              {showForm ? 'Batal' : '+ Tambah Sub Modul'}
+              {showForm ? "Batal" : "+ Tambah Sub Modul"}
             </button>
           )}
         </div>
@@ -131,7 +131,7 @@ const SubModuleManagement = () => {
         {showForm && selectedModuleId && (
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-primary mb-4">
-              {editingSubModule ? 'Edit Sub Modul' : 'Tambah Sub Modul Baru'}
+              {editingSubModule ? "Edit Sub Modul" : "Tambah Sub Modul Baru"}
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -173,7 +173,7 @@ const SubModuleManagement = () => {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      passing_grade: parseInt(e.target.value)
+                      passing_grade: parseInt(e.target.value),
                     })
                   }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg"
@@ -185,7 +185,7 @@ const SubModuleManagement = () => {
                 disabled={submitting}
                 className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 disabled:opacity-50"
               >
-                {submitting ? 'Menyimpan...' : 'Simpan'}
+                {submitting ? "Menyimpan..." : "Simpan"}
               </button>
             </form>
           </div>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import api from '../utils/api';
-import ChatAI from '../components/ChatAI';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import api from "../utils/api";
+import ChatAI from "../components/ChatAI";
 
 const Result = () => {
   const { id } = useParams();
@@ -19,7 +19,7 @@ const Result = () => {
   useEffect(() => {
     Promise.all([
       api.get(`/submodules/${id}`),
-      api.get(`/progress/submodule/${id}`)
+      api.get(`/progress/submodule/${id}`),
     ])
       .then(([subModuleRes, progressRes]) => {
         setSubModule(subModuleRes.data.subModule);
@@ -37,10 +37,11 @@ const Result = () => {
     );
   }
 
-  const isPassed = progress?.is_passed || (score >= (subModule?.passing_grade || 70));
+  const isPassed =
+    progress?.is_passed || score >= (subModule?.passing_grade || 70);
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light py-8 pt-24">
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-3xl font-bold text-primary mb-8">Hasil Postest</h1>
 
@@ -111,47 +112,46 @@ const Result = () => {
                         <span
                           className={`px-3 py-1 rounded-full text-sm font-semibold ${
                             isCorrect
-                              ? 'bg-green-100 text-green-700'
-                              : 'bg-red-100 text-red-700'
+                              ? "bg-green-100 text-green-700"
+                              : "bg-red-100 text-red-700"
                           }`}
                         >
-                          {isCorrect ? 'Benar' : 'Salah'}
+                          {isCorrect ? "Benar" : "Salah"}
                         </span>
                       </div>
                       <p className="text-gray-800 mb-4">{item.question_text}</p>
 
                       <div className="space-y-2">
-                      {item.options?.map((opt) => {
-  const isUserAnswer =
-    item.user_answer &&
-    item.user_answer.toUpperCase() ===
-      opt.option_label.toUpperCase();
+                        {item.options?.map((opt) => {
+                          const isUserAnswer =
+                            item.user_answer &&
+                            item.user_answer.toUpperCase() ===
+                              opt.option_label.toUpperCase();
 
-  return (
-    <div
-      key={opt.option_label}
-      className={`flex items-center px-4 py-2 rounded border ${
-        isUserAnswer
-          ? 'border-blue-500 bg-blue-50'
-          : 'border-gray-200 bg-white'
-      }`}
-    >
-      <span className="text-gray-800">
-        <span className="font-semibold mr-1">
-          {opt.option_label}.
-        </span>
-        {opt.option_text}
-      </span>
+                          return (
+                            <div
+                              key={opt.option_label}
+                              className={`flex items-center px-4 py-2 rounded border ${
+                                isUserAnswer
+                                  ? "border-blue-500 bg-blue-50"
+                                  : "border-gray-200 bg-white"
+                              }`}
+                            >
+                              <span className="text-gray-800">
+                                <span className="font-semibold mr-1">
+                                  {opt.option_label}.
+                                </span>
+                                {opt.option_text}
+                              </span>
 
-      {isUserAnswer && (
-        <span className="ml-auto text-blue-600 text-xs font-semibold">
-          Jawaban Anda
-        </span>
-      )}
-    </div>
-  );
-})}
-
+                              {isUserAnswer && (
+                                <span className="ml-auto text-blue-600 text-xs font-semibold">
+                                  Jawaban Anda
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   );
@@ -162,12 +162,15 @@ const Result = () => {
 
           {/* Chat AI selalu tampil di bawah hasil postest */}
           <div className="mt-10">
-            <ChatAI subModuleId={parseInt(id)} subModuleName={subModule?.name} />
+            <ChatAI
+              subModuleId={parseInt(id)}
+              subModuleName={subModule?.name}
+            />
           </div>
 
           <div className="mt-6">
             <button
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate("/dashboard")}
               className="text-secondary hover:underline"
             >
               Kembali ke Dashboard

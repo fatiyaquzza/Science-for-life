@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Leaf } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
@@ -11,14 +12,10 @@ const Navbar = () => {
     navigate("/");
   };
 
-  const logoLink = !user
-    ? "/"
-    : isAdmin
-    ? "/admin/dashboard"
-    : "/dashboard";
+  const logoLink = !user ? "/" : isAdmin ? "/admin/dashboard" : "/dashboard";
 
   return (
-    <nav className="bg-white shadow-sm fixed w-full z-50 border-b border-gray-100">
+    <nav className="bg-white shadow-sm fixed w-full z-50  border-b border-gray-100">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -69,12 +66,7 @@ const Navbar = () => {
             ) : (
               <div className="flex items-center gap-6">
                 {isAdmin ? (
-                  <Link
-                    to="/admin/dashboard"
-                    className="text-gray-700 hover:text-green-600 font-medium transition-colors"
-                  >
-                    Admin Panel
-                  </Link>
+                  <></>
                 ) : (
                   <Link
                     to="/dashboard"
@@ -90,8 +82,19 @@ const Navbar = () => {
 
                 <button
                   onClick={handleLogout}
-                  className="text-gray-600 hover:text-green-600 font-medium transition-colors"
+                  className="
+    flex items-center gap-2
+    bg-red-500 text-white
+    px-5 py-2.5
+    rounded-lg
+    font-semibold
+    shadow-sm
+    hover:bg-red-600 hover:shadow-md
+    active:scale-95
+    transition-all duration-200
+  "
                 >
+                  <LogOut className="w-4 h-4" />
                   Logout
                 </button>
               </div>

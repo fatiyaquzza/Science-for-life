@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../utils/api';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
 const Postest = () => {
   const { id } = useParams();
@@ -9,7 +9,7 @@ const Postest = () => {
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     api
@@ -27,19 +27,19 @@ const Postest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setSubmitting(true);
 
     const answerArray = Object.entries(answers).map(([questionId, answer]) => ({
       question_id: parseInt(questionId),
-      user_answer: answer
+      user_answer: answer,
     }));
 
     try {
-      const res = await api.post('/questions/submit', {
+      const res = await api.post("/questions/submit", {
         sub_module_id: parseInt(id),
-        test_type: 'postest',
-        answers: answerArray
+        test_type: "postest",
+        answers: answerArray,
       });
 
       navigate(`/result/${id}`, {
@@ -47,12 +47,12 @@ const Postest = () => {
           score: res.data.score,
           correctCount: res.data.correctCount,
           totalQuestions: res.data.totalQuestions,
-          details: res.data.details || []
-        }
+          details: res.data.details || [],
+        },
       });
     } catch (error) {
       console.error(error);
-      setError('Terjadi kesalahan saat menyimpan jawaban');
+      setError("Terjadi kesalahan saat menyimpan jawaban");
       setSubmitting(false);
     }
   };
@@ -66,7 +66,7 @@ const Postest = () => {
   }
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light py-8 pt-28">
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-3xl font-bold text-primary mb-8">Postest</h1>
 
@@ -85,7 +85,7 @@ const Postest = () => {
                 </h3>
                 <p className="text-gray-700 mb-4">{question.question_text}</p>
 
-                {question.question_type === 'choice' ? (
+                {question.question_type === "choice" ? (
                   <div className="space-y-2">
                     {question.options?.map((option) => (
                       <label
@@ -110,7 +110,7 @@ const Postest = () => {
                   </div>
                 ) : (
                   <textarea
-                    value={answers[question.id] || ''}
+                    value={answers[question.id] || ""}
                     onChange={(e) =>
                       handleAnswerChange(question.id, e.target.value)
                     }
@@ -129,7 +129,7 @@ const Postest = () => {
               disabled={submitting || questions.length === 0}
               className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {submitting ? 'Menyimpan...' : 'Submit Jawaban'}
+              {submitting ? "Menyimpan..." : "Submit Jawaban"}
             </button>
           </div>
         </form>

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../utils/api';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
 const Material = () => {
   const { id } = useParams();
@@ -12,7 +12,7 @@ const Material = () => {
   useEffect(() => {
     Promise.all([
       api.get(`/submodules/${id}`),
-      api.get(`/materials/submodule/${id}`)
+      api.get(`/materials/submodule/${id}`),
     ])
       .then(([subModuleRes, materialsRes]) => {
         setSubModule(subModuleRes.data.subModule);
@@ -42,7 +42,7 @@ const Material = () => {
   }
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light py-8 pt-24">
       <div className="container mx-auto px-4 max-w-4xl">
         <button
           onClick={() => navigate(-1)}
@@ -52,7 +52,7 @@ const Material = () => {
         </button>
 
         <h1 className="text-3xl font-bold text-primary mb-8">
-          {subModule?.name || 'Materi'}
+          {subModule?.name || "Materi"}
         </h1>
 
         {material ? (

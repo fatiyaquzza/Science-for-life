@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import api from '../utils/api';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import api from "../utils/api";
 
 const Dashboard = () => {
   const [modules, setModules] = useState([]);
@@ -8,7 +8,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     api
-      .get('/modules')
+      .get("/modules")
       .then((res) => {
         setModules(res.data.modules);
         setLoading(false);
@@ -17,7 +17,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light py-8 pt-24">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold text-primary mb-8">Dashboard</h1>
 
@@ -49,7 +49,7 @@ const Dashboard = () => {
                     {module.name}
                   </h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">
-                    {module.description || 'Tidak ada deskripsi'}
+                    {module.description || "Tidak ada deskripsi"}
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">

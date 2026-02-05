@@ -88,7 +88,7 @@ const UserManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light pb-8 pt-28 px-6">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold text-primary mb-8">Manajemen User</h1>
 
@@ -201,77 +201,112 @@ const UserManagement = () => {
         {loading ? (
           <p className="text-gray-500">Memuat...</p>
         ) : (
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-primary text-white">
-                <tr>
-                  <th className="px-6 py-3 text-left">Nama</th>
-                  <th className="px-6 py-3 text-left">Email</th>
-                  <th className="px-6 py-3 text-left">Role</th>
-                  <th className="px-6 py-3 text-left">Pekerjaan</th>
-                  <th className="px-6 py-3 text-left">Alamat</th>
-                  <th className="px-6 py-3 text-left">Progress</th>
-                  <th className="px-6 py-3 text-left">Rata-rata Pretest</th>
-                  <th className="px-6 py-3 text-left">Rata-rata Post Test</th>
-                  <th className="px-6 py-3 text-left">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id} className="border-t">
-                    <td className="px-6 py-4">{user.name}</td>
-                    <td className="px-6 py-4">{user.email}</td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`px-2 py-1 rounded ${
-                          user.role === "admin"
-                            ? "bg-red-100 text-red-700"
-                            : "bg-blue-100 text-blue-700"
-                        }`}
-                      >
-                        {user.role}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">{user.job || "-"}</td>
-                    <td
-                      className="px-6 py-4 max-w-xs truncate"
-                      title={user.address || "-"}
-                    >
-                      {user.address || "-"}
-                    </td>
-                    <td className="px-6 py-4">
-                      {user.total_progress || 0} sub modul
-                    </td>
-                    <td className="px-6 py-4">
-                      {user.avg_pretest_score !== null &&
-                      user.avg_pretest_score !== undefined
-                        ? `${Math.round(user.avg_pretest_score)}%`
-                        : "-"}
-                    </td>
-                    <td className="px-6 py-4">
-                      {user.avg_posttest_score !== null &&
-                      user.avg_posttest_score !== undefined
-                        ? `${Math.round(user.avg_posttest_score)}%`
-                        : "-"}
-                    </td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => handleEdit(user)}
-                        className="text-secondary hover:underline mr-4"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(user.id)}
-                        className="text-red-500 hover:underline"
-                      >
-                        Hapus
-                      </button>
-                    </td>
+          <div className="bg-white rounded-lg shadow-lg">
+            <div className="overflow-x-auto rounded-lg">
+              <table className="min-w-[1400px] w-full border-collapse">
+                <thead className="bg-primary text-white sticky top-0 z-10">
+                  <tr>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Nama
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Role
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Pekerjaan
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Alamat
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Progress
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Rata-rata Pretest
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Rata-rata Post Test
+                    </th>
+                    <th className="px-6 py-3 text-left whitespace-nowrap">
+                      Aksi
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {users.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="border-t hover:bg-gray-50 transition"
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {user.name}
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {user.email}
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-3 py-1 rounded-full text-sm font-medium ${
+                            user.role === "admin"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-blue-100 text-blue-700"
+                          }`}
+                        >
+                          {user.role}
+                        </span>
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {user.job || "-"}
+                      </td>
+
+                      <td className="px-6 py-4 max-w-sm">
+                        <div className="truncate" title={user.address || "-"}>
+                          {user.address || "-"}
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {user.total_progress || 0} sub modul
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {user.avg_pretest_score != null
+                          ? `${Math.round(user.avg_pretest_score)}%`
+                          : "-"}
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {user.avg_posttest_score != null
+                          ? `${Math.round(user.avg_posttest_score)}%`
+                          : "-"}
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => handleEdit(user)}
+                          className="text-green-600 hover:underline mr-4 font-medium"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(user.id)}
+                          className="text-red-500 hover:underline font-medium"
+                        >
+                          Hapus
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
