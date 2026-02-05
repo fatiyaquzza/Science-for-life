@@ -23,3 +23,17 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Bounce animation for scroll indicator */
+@keyframes bounce-smooth {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 12px);
+  }
+}
+
+.animate-bounce-smooth {
+  animation: bounce-smooth 2s ease-in-out infinite;
+}

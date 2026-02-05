@@ -93,6 +93,16 @@ CREATE TABLE IF NOT EXISTS user_answers (
   FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
 
+-- Table: contact_feedback (untuk saran dan masukan dari form Contact Us)
+CREATE TABLE IF NOT EXISTS contact_feedback (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  subject VARCHAR(200),
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Insert default admin user (password: admin123)
 -- Password hash untuk "admin123" menggunakan bcrypt dengan salt rounds 10
 -- Untuk membuat hash baru, gunakan: bcrypt.hash('admin123', 10)
