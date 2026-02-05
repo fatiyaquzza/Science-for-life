@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../utils/api';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
 const Pretest = () => {
   const { id } = useParams();
@@ -30,19 +30,19 @@ const Pretest = () => {
 
     const answerArray = Object.entries(answers).map(([questionId, answer]) => ({
       question_id: parseInt(questionId),
-      user_answer: answer
+      user_answer: answer,
     }));
 
     try {
-      await api.post('/questions/submit', {
+      await api.post("/questions/submit", {
         sub_module_id: parseInt(id),
-        test_type: 'pretest',
-        answers: answerArray
+        test_type: "pretest",
+        answers: answerArray,
       });
 
       navigate(`/material/${id}`);
     } catch (error) {
-      alert('Terjadi kesalahan saat menyimpan jawaban');
+      alert("Terjadi kesalahan saat menyimpan jawaban");
       setSubmitting(false);
     }
   };
@@ -56,7 +56,7 @@ const Pretest = () => {
   }
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light py-8 pt-28">
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-3xl font-bold text-primary mb-8">Pretest</h1>
 
@@ -69,7 +69,7 @@ const Pretest = () => {
                 </h3>
                 <p className="text-gray-700 mb-4">{question.question_text}</p>
 
-                {question.question_type === 'choice' ? (
+                {question.question_type === "choice" ? (
                   <div className="space-y-2">
                     {question.options?.map((option) => (
                       <label
@@ -94,7 +94,7 @@ const Pretest = () => {
                   </div>
                 ) : (
                   <textarea
-                    value={answers[question.id] || ''}
+                    value={answers[question.id] || ""}
                     onChange={(e) =>
                       handleAnswerChange(question.id, e.target.value)
                     }
@@ -113,7 +113,7 @@ const Pretest = () => {
               disabled={submitting || questions.length === 0}
               className="bg-primary text-white px-8 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {submitting ? 'Menyimpan...' : 'Submit Jawaban'}
+              {submitting ? "Menyimpan..." : "Submit Jawaban"}
             </button>
           </div>
         </form>

@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import api from '../../utils/api';
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
 
 const MaterialManagement = () => {
   const [modules, setModules] = useState([]);
-  const [selectedModuleId, setSelectedModuleId] = useState('');
+  const [selectedModuleId, setSelectedModuleId] = useState("");
   const [subModules, setSubModules] = useState([]);
-  const [selectedSubModuleId, setSelectedSubModuleId] = useState('');
+  const [selectedSubModuleId, setSelectedSubModuleId] = useState("");
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingMaterial, setEditingMaterial] = useState(null);
   const [formData, setFormData] = useState({
-    sub_module_id: '',
-    description: '',
-    video_url: ''
+    sub_module_id: "",
+    description: "",
+    video_url: "",
   });
   const [fileFile, setFileFile] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    api.get('/modules').then((res) => {
+    api.get("/modules").then((res) => {
       setModules(res.data.modules);
       setLoading(false);
     });
@@ -56,28 +56,28 @@ const MaterialManagement = () => {
     setSubmitting(true);
 
     const formDataToSend = new FormData();
-    formDataToSend.append('sub_module_id', formData.sub_module_id);
-    formDataToSend.append('description', formData.description);
-    formDataToSend.append('video_url', formData.video_url);
+    formDataToSend.append("sub_module_id", formData.sub_module_id);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("video_url", formData.video_url);
     if (fileFile) {
-      formDataToSend.append('file', fileFile);
+      formDataToSend.append("file", fileFile);
     }
 
     try {
       if (editingMaterial) {
         await api.put(`/materials/${editingMaterial.id}`, formDataToSend, {
-          headers: { 'Content-Type': 'multipart/form-data' }
+          headers: { "Content-Type": "multipart/form-data" },
         });
       } else {
-        await api.post('/materials', formDataToSend, {
-          headers: { 'Content-Type': 'multipart/form-data' }
+        await api.post("/materials", formDataToSend, {
+          headers: { "Content-Type": "multipart/form-data" },
         });
       }
 
       fetchMaterials();
       resetForm();
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert("Terjadi kesalahan");
     } finally {
       setSubmitting(false);
     }
@@ -87,28 +87,28 @@ const MaterialManagement = () => {
     setEditingMaterial(material);
     setFormData({
       sub_module_id: material.sub_module_id,
-      description: material.description || '',
-      video_url: material.video_url || ''
+      description: material.description || "",
+      video_url: material.video_url || "",
     });
     setShowForm(true);
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Yakin ingin menghapus materi ini?')) return;
+    if (!window.confirm("Yakin ingin menghapus materi ini?")) return;
 
     try {
       await api.delete(`/materials/${id}`);
       fetchMaterials();
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert("Terjadi kesalahan");
     }
   };
 
   const resetForm = () => {
     setFormData({
       sub_module_id: selectedSubModuleId,
-      description: '',
-      video_url: ''
+      description: "",
+      video_url: "",
     });
     setFileFile(null);
     setEditingMaterial(null);
@@ -116,7 +116,7 @@ const MaterialManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light pb-8 pt-28 px-6">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold text-primary mb-8">
           Manajemen Materi
@@ -132,7 +132,7 @@ const MaterialManagement = () => {
                 value={selectedModuleId}
                 onChange={(e) => {
                   setSelectedModuleId(e.target.value);
-                  setSelectedSubModuleId('');
+                  setSelectedSubModuleId("");
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               >
@@ -172,7 +172,7 @@ const MaterialManagement = () => {
               onClick={() => setShowForm(!showForm)}
               className="mt-4 bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90"
             >
-              {showForm ? 'Batal' : '+ Tambah Materi'}
+              {showForm ? "Batal" : "+ Tambah Materi"}
             </button>
           )}
         </div>
@@ -180,7 +180,7 @@ const MaterialManagement = () => {
         {showForm && selectedSubModuleId && (
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-primary mb-4">
-              {editingMaterial ? 'Edit Materi' : 'Tambah Materi Baru'}
+              {editingMaterial ? "Edit Materi" : "Tambah Materi Baru"}
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -226,7 +226,7 @@ const MaterialManagement = () => {
                 disabled={submitting}
                 className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 disabled:opacity-50"
               >
-                {submitting ? 'Menyimpan...' : 'Simpan'}
+                {submitting ? "Menyimpan..." : "Simpan"}
               </button>
             </form>
           </div>
@@ -246,14 +246,12 @@ const MaterialManagement = () => {
               <tbody>
                 {materials.map((material) => (
                   <tr key={material.id} className="border-t">
+                    <td className="px-6 py-4">{material.description || "-"}</td>
                     <td className="px-6 py-4">
-                      {material.description || '-'}
+                      {material.video_url ? "✓" : "-"}
                     </td>
                     <td className="px-6 py-4">
-                      {material.video_url ? '✓' : '-'}
-                    </td>
-                    <td className="px-6 py-4">
-                      {material.file_url ? '✓' : '-'}
+                      {material.file_url ? "✓" : "-"}
                     </td>
                     <td className="px-6 py-4">
                       <button

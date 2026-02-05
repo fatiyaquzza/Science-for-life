@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import api from '../utils/api';
-import { useAuth } from '../context/AuthContext';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../utils/api";
+import { useAuth } from "../context/AuthContext";
 
 const ModuleDetail = () => {
   const { id } = useParams();
@@ -15,12 +15,12 @@ const ModuleDetail = () => {
   useEffect(() => {
     Promise.all([
       api.get(`/modules/${id}`),
-      api.get(`/submodules/module/${id}`)
+      api.get(`/submodules/module/${id}`),
     ])
       .then(([moduleRes, subModulesRes]) => {
         setModule(moduleRes.data.module);
         setSubModules(subModulesRes.data.subModules);
-        
+
         // Fetch progress for all sub modules
         if (user) {
           const progressPromises = subModulesRes.data.subModules.map((sm) =>
@@ -29,7 +29,7 @@ const ModuleDetail = () => {
               .then((res) => ({ id: sm.id, progress: res.data.progress }))
               .catch(() => ({ id: sm.id, progress: null }))
           );
-          
+
           Promise.all(progressPromises).then((results) => {
             const map = {};
             results.forEach(({ id, progress }) => {
@@ -38,7 +38,7 @@ const ModuleDetail = () => {
             setProgressMap(map);
           });
         }
-        
+
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -46,20 +46,23 @@ const ModuleDetail = () => {
 
   const getStatusBadge = (subModule) => {
     const progress = progressMap[subModule.id];
-    
+
     if (!progress || !progress.pretest_done) {
-      return { text: 'Belum Dimulai', color: 'bg-gray-200 text-gray-700' };
+      return { text: "Belum Dimulai", color: "bg-gray-200 text-gray-700" };
     }
-    
+
     if (progress.is_passed) {
-      return { text: 'Lulus', color: 'bg-secondary text-white' };
+      return { text: "Lulus", color: "bg-secondary text-white" };
     }
-    
+
     if (progress.pretest_done && !progress.postest_done) {
-      return { text: 'Pretest Selesai', color: 'bg-yellow-200 text-yellow-700' };
+      return {
+        text: "Pretest Selesai",
+        color: "bg-yellow-200 text-yellow-700",
+      };
     }
-    
-    return { text: 'Belum Lulus', color: 'bg-orange-200 text-orange-700' };
+
+    return { text: "Belum Lulus", color: "bg-orange-200 text-orange-700" };
   };
 
   const handleSubModuleClick = async (subModuleId) => {
@@ -95,16 +98,18 @@ const ModuleDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light py-8 pt-24">
       <div className="container mx-auto px-4">
         <div className="mb-8">
           <button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate("/dashboard")}
             className="text-secondary hover:underline mb-4"
           >
             ← Kembali ke Dashboard
           </button>
-          <h1 className="text-3xl font-bold text-primary mb-4">{module.name}</h1>
+          <h1 className="text-3xl font-bold text-primary mb-4">
+            {module.name}
+          </h1>
           {module.description && (
             <p className="text-gray-600">{module.description}</p>
           )}
@@ -140,7 +145,9 @@ const ModuleDetail = () => {
                     {(() => {
                       const badge = getStatusBadge(subModule);
                       return (
-                        <span className={`${badge.color} px-3 py-1 rounded-full text-sm`}>
+                        <span
+                          className={`${badge.color} px-3 py-1 rounded-full text-sm`}
+                        >
                           {badge.text}
                         </span>
                       );

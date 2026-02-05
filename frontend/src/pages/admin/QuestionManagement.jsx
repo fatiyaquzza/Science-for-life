@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react';
-import api from '../../utils/api';
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
 
 const QuestionManagement = () => {
   const [modules, setModules] = useState([]);
-  const [selectedModuleId, setSelectedModuleId] = useState('');
+  const [selectedModuleId, setSelectedModuleId] = useState("");
   const [subModules, setSubModules] = useState([]);
-  const [selectedSubModuleId, setSelectedSubModuleId] = useState('');
-  const [selectedType, setSelectedType] = useState('pretest');
+  const [selectedSubModuleId, setSelectedSubModuleId] = useState("");
+  const [selectedType, setSelectedType] = useState("pretest");
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingQuestion, setEditingQuestion] = useState(null);
   const [formData, setFormData] = useState({
-    sub_module_id: '',
-    type: 'pretest',
-    question_text: '',
-    correct_answer: '',
+    sub_module_id: "",
+    type: "pretest",
+    question_text: "",
+    correct_answer: "",
     options: [
-      { label: 'A', text: '' },
-      { label: 'B', text: '' },
-      { label: 'C', text: '' },
-      { label: 'D', text: '' }
-    ]
+      { label: "A", text: "" },
+      { label: "B", text: "" },
+      { label: "C", text: "" },
+      { label: "D", text: "" },
+    ],
   });
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    api.get('/modules').then((res) => {
+    api.get("/modules").then((res) => {
       setModules(res.data.modules);
       setLoading(false);
     });
@@ -65,28 +65,28 @@ const QuestionManagement = () => {
     const dataToSend = {
       sub_module_id: formData.sub_module_id,
       type: formData.type,
-      question_type: 'choice',
+      question_type: "choice",
       question_text: formData.question_text,
       correct_answer: formData.correct_answer,
       options: formData.options
         .map((opt, idx) => ({
           label: opt.label || String.fromCharCode(65 + idx),
-          text: opt.text
+          text: opt.text,
         }))
-        .slice(0, 4)
+        .slice(0, 4),
     };
 
     try {
       if (editingQuestion) {
         await api.put(`/questions/${editingQuestion.id}`, dataToSend);
       } else {
-        await api.post('/questions', dataToSend);
+        await api.post("/questions", dataToSend);
       }
 
       fetchQuestions();
       resetForm();
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert("Terjadi kesalahan");
     } finally {
       setSubmitting(false);
     }
@@ -102,26 +102,26 @@ const QuestionManagement = () => {
       options: question.options
         ? question.options.map((opt) => ({
             label: opt.option_label,
-            text: opt.option_text
+            text: opt.option_text,
           }))
         : [
-            { label: 'A', text: '' },
-            { label: 'B', text: '' },
-            { label: 'C', text: '' },
-            { label: 'D', text: '' }
-          ]
+            { label: "A", text: "" },
+            { label: "B", text: "" },
+            { label: "C", text: "" },
+            { label: "D", text: "" },
+          ],
     });
     setShowForm(true);
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Yakin ingin menghapus soal ini?')) return;
+    if (!window.confirm("Yakin ingin menghapus soal ini?")) return;
 
     try {
       await api.delete(`/questions/${id}`);
       fetchQuestions();
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert("Terjadi kesalahan");
     }
   };
 
@@ -129,14 +129,14 @@ const QuestionManagement = () => {
     setFormData({
       sub_module_id: selectedSubModuleId,
       type: selectedType,
-      question_text: '',
-      correct_answer: '',
+      question_text: "",
+      correct_answer: "",
       options: [
-        { label: 'A', text: '' },
-        { label: 'B', text: '' },
-        { label: 'C', text: '' },
-        { label: 'D', text: '' }
-      ]
+        { label: "A", text: "" },
+        { label: "B", text: "" },
+        { label: "C", text: "" },
+        { label: "D", text: "" },
+      ],
     });
     setEditingQuestion(null);
     setShowForm(false);
@@ -149,11 +149,9 @@ const QuestionManagement = () => {
   };
 
   return (
-    <div className="min-h-screen bg-light py-8">
+    <div className="min-h-screen bg-light pb-8 pt-28 px-6">
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-primary mb-8">
-          Manajemen Soal
-        </h1>
+        <h1 className="text-3xl font-bold text-primary mb-8">Manajemen Soal</h1>
 
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -165,7 +163,7 @@ const QuestionManagement = () => {
                 value={selectedModuleId}
                 onChange={(e) => {
                   setSelectedModuleId(e.target.value);
-                  setSelectedSubModuleId('');
+                  setSelectedSubModuleId("");
                 }}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               >
@@ -207,7 +205,7 @@ const QuestionManagement = () => {
                   <input
                     type="radio"
                     value="pretest"
-                    checked={selectedType === 'pretest'}
+                    checked={selectedType === "pretest"}
                     onChange={(e) => {
                       setSelectedType(e.target.value);
                       setFormData({ ...formData, type: e.target.value });
@@ -220,7 +218,7 @@ const QuestionManagement = () => {
                   <input
                     type="radio"
                     value="postest"
-                    checked={selectedType === 'postest'}
+                    checked={selectedType === "postest"}
                     onChange={(e) => {
                       setSelectedType(e.target.value);
                       setFormData({ ...formData, type: e.target.value });
@@ -238,7 +236,7 @@ const QuestionManagement = () => {
               onClick={() => setShowForm(!showForm)}
               className="mt-4 bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90"
             >
-              {showForm ? 'Batal' : '+ Tambah Soal'}
+              {showForm ? "Batal" : "+ Tambah Soal"}
             </button>
           )}
         </div>
@@ -246,7 +244,7 @@ const QuestionManagement = () => {
         {showForm && selectedSubModuleId && (
           <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-primary mb-4">
-              {editingQuestion ? 'Edit Soal' : 'Tambah Soal Baru'}
+              {editingQuestion ? "Edit Soal" : "Tambah Soal Baru"}
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -309,7 +307,7 @@ const QuestionManagement = () => {
                 disabled={submitting}
                 className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 disabled:opacity-50"
               >
-                {submitting ? 'Menyimpan...' : 'Simpan'}
+                {submitting ? "Menyimpan..." : "Simpan"}
               </button>
             </form>
           </div>
@@ -329,9 +327,7 @@ const QuestionManagement = () => {
                 {questions.map((question) => (
                   <tr key={question.id} className="border-t">
                     <td className="px-6 py-4">{question.question_text}</td>
-                    <td className="px-6 py-4">
-                      {'Pilihan Ganda'}
-                    </td>
+                    <td className="px-6 py-4">{"Pilihan Ganda"}</td>
                     <td className="px-6 py-4">
                       <button
                         onClick={() => handleEdit(question)}
