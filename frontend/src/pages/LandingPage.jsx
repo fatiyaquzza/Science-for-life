@@ -565,7 +565,7 @@ const LandingPage = () => {
                   )}
                   <button
                     type="submit"
-                    className="w-full md:w-auto flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg"
+                    className="w-full md:w-auto flex items-center justify-center mx-auto gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg"
                   >
                     <Send className="w-5 h-5" />
                     Kirim Pesan
