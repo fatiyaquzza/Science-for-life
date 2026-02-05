@@ -22,6 +22,7 @@ app.use('/api/questions', require('./routes/questionRoutes'));
 app.use('/api/progress', require('./routes/userProgressRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/ai', require('./routes/aiChatRoutes'));
+app.use('/api/contact', require('./routes/contactRoutes'));
 
 // Health check
 app.get('/api/health', (req, res) => {
