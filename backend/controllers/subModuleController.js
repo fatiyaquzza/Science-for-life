@@ -17,7 +17,6 @@ const getSubModulesByModule = async (req, res) => {
 
     res.json({ subModules });
   } catch (error) {
-    console.error('Get sub modules by module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -37,7 +36,6 @@ const getSubModuleById = async (req, res) => {
 
     res.json({ subModule: subModules[0] });
   } catch (error) {
-    console.error('Get sub module by id error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -75,7 +73,6 @@ const createSubModule = async (req, res) => {
       subModule: newSubModule[0]
     });
   } catch (error) {
-    console.error('Create sub module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -115,7 +112,6 @@ const updateSubModule = async (req, res) => {
       subModule: updatedSubModule[0]
     });
   } catch (error) {
-    console.error('Update sub module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -138,7 +134,6 @@ const deleteSubModule = async (req, res) => {
 
     res.json({ message: 'Sub module deleted successfully' });
   } catch (error) {
-    console.error('Delete sub module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

@@ -26,7 +26,6 @@ const getQuestionsBySubModule = async (req, res) => {
 
     res.json({ questions });
   } catch (error) {
-    console.error('Get questions error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -100,7 +99,6 @@ const createQuestion = async (req, res) => {
       question: newQuestion[0]
     });
   } catch (error) {
-    console.error('Create question error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -167,7 +165,6 @@ const updateQuestion = async (req, res) => {
       question: updatedQuestion[0]
     });
   } catch (error) {
-    console.error('Update question error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -190,7 +187,6 @@ const deleteQuestion = async (req, res) => {
 
     res.json({ message: 'Question deleted successfully' });
   } catch (error) {
-    console.error('Delete question error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -323,7 +319,6 @@ const submitAnswers = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error('Submit answers error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

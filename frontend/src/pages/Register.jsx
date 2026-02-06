@@ -84,8 +84,8 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-light py-12 pt-20 px-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+    <div className="min-h-screen flex items-center justify-center bg-light py-8 pt-20 pb-12 px-4 sm:py-12">
+      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6 sm:p-8">
         <h2 className="text-3xl font-bold text-center text-primary mb-6">
           Daftar
         </h2>

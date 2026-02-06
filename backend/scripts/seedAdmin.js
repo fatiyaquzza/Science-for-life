@@ -25,10 +25,7 @@ async function seedAdmin() {
       database: process.env.DB_NAME || 'science_for_life'
     });
 
-    console.log('[*] Koneksi database OK');
-
     const hashedPassword = bcrypt.hashSync(ADMIN_PASSWORD, 10);
-    console.log('[*] Password di-hash dengan bcrypt');
 
     const [existing] = await connection.execute(
       'SELECT id, email FROM users WHERE email = ?',
@@ -40,23 +37,13 @@ async function seedAdmin() {
         'UPDATE users SET name = ?, password = ?, role = ? WHERE email = ?',
         [ADMIN_NAME, hashedPassword, 'admin', ADMIN_EMAIL]
       );
-      console.log('[OK] Admin sudah ada, password di-update.');
     } else {
       await connection.execute(
         'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
         [ADMIN_NAME, ADMIN_EMAIL, hashedPassword, 'admin']
       );
-      console.log('[OK] Admin baru dibuat.');
     }
-
-    console.log('');
-    console.log('--- Akun Admin ---');
-    console.log('Email   :', ADMIN_EMAIL);
-    console.log('Password:', ADMIN_PASSWORD);
-    console.log('------------------');
-    console.log('Silakan login di aplikasi dengan data di atas.');
   } catch (err) {
-    console.error('[ERROR]', err.message);
     process.exit(1);
   } finally {
     if (connection) await connection.end();

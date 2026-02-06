@@ -31,8 +31,6 @@ app.get('/api/health', (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  
   if (err.message && err.message.includes('Only')) {
     return res.status(400).json({ message: err.message });
   }
@@ -45,7 +43,4 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📚 Science For Life API`);
-});
+app.listen(PORT);

@@ -41,7 +41,6 @@ const getProgressBySubModule = async (req, res) => {
 
     res.json({ progress: progress[0] });
   } catch (error) {
-    console.error('Get progress by sub module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -72,7 +71,6 @@ const getAllUserProgress = async (req, res) => {
 
     res.json({ progress });
   } catch (error) {
-    console.error('Get all user progress error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

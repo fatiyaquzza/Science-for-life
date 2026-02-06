@@ -11,7 +11,6 @@ const getMaterialsBySubModule = async (req, res) => {
 
     res.json({ materials });
   } catch (error) {
-    console.error('Get materials by sub module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -50,7 +49,6 @@ const createMaterial = async (req, res) => {
       material: newMaterial[0]
     });
   } catch (error) {
-    console.error('Create material error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -95,7 +93,6 @@ const updateMaterial = async (req, res) => {
       material: updatedMaterial[0]
     });
   } catch (error) {
-    console.error('Update material error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -118,7 +115,6 @@ const deleteMaterial = async (req, res) => {
 
     res.json({ message: 'Material deleted successfully' });
   } catch (error) {
-    console.error('Delete material error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

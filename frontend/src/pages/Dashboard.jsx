@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../utils/api";
 
+const API_BASE = import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, "")
+  : "http://localhost:5000";
+
 const Dashboard = () => {
   const [modules, setModules] = useState([]);
   const [filteredModules, setFilteredModules] = useState([]);
@@ -25,13 +29,12 @@ const Dashboard = () => {
         try {
           const categoriesRes = await api.get("/categories");
           setCategories(categoriesRes.data.categories || []);
-        } catch (err) {
-          console.log("Categories endpoint not available");
+        } catch {
+          /* categories endpoint optional */
         }
 
         setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      } catch {
         setLoading(false);
       }
     };
@@ -160,10 +163,10 @@ const Dashboard = () => {
           </div>
 
           {/* Filters Row */}
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4">
             {/* Sort By */}
-            <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 w-full sm:w-auto">
                 <svg
                   className="w-4 h-4 text-primary"
                   fill="none"
@@ -179,7 +182,7 @@ const Dashboard = () => {
                 </svg>
                 Urutkan:
               </label>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSortBy("popular")}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
@@ -350,18 +353,14 @@ const Dashboard = () => {
               <Link
                 key={module.id}
                 to={`/module/${module.id}`}
-                className="overflow-hidden transition-all duration-300 transform bg-white border shadow-lg group rounded-2xl hover:shadow-2xl border-slate-100 hover:border-primary hover:-translate-y-1"
-                style={{
-                  animationDelay: `${index * 50}ms`,
-                  animation: "fadeInUp 0.5s ease-out forwards",
-                  opacity: 0,
-                }}
+                className="overflow-hidden transition-all duration-300 transform bg-white border shadow-lg group rounded-2xl hover:shadow-2xl border-slate-100 hover:border-primary hover:-translate-y-1 animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 {/* Module Image */}
                 <div className="relative h-48 overflow-hidden bg-green-100">
                   {module.image_url ? (
                     <img
-                      src={`http://localhost:5000${module.image_url}`}
+                      src={`${API_BASE}${module.image_url}`}
                       alt={module.name}
                       className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                     />
@@ -441,18 +440,6 @@ const Dashboard = () => {
         )}
       </div>
 
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
