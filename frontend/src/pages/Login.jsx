@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Eye, EyeOff } from "lucide-react";
@@ -7,9 +7,17 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user, isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+  // Redirect jika sudah login
+  useEffect(() => {
+    if (authLoading) return;
+    if (user) {
+      navigate(isAdmin ? "/admin/dashboard" : "/dashboard", { replace: true });
+    }
+  }, [user, isAdmin, authLoading, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,17 +38,18 @@ const Login = () => {
     const result = await login(formData.email, formData.password);
 
     if (result.success) {
-      if (result.user?.role === "admin") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/dashboard");
-      }
+      const role = result.user?.role;
+      navigate(role === "admin" ? "/admin/dashboard" : "/dashboard", { replace: true });
     } else {
       setError(result.message);
     }
 
     setLoading(false);
   };
+
+  if (authLoading || user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-light py-12 px-4">

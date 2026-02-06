@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -28,16 +28,15 @@ import MaterialManagement from "./pages/admin/MaterialManagement";
 import QuestionManagement from "./pages/admin/QuestionManagement";
 import UserManagement from "./pages/admin/UserManagement";
 
-function App() {
-  return (
-    <AuthProvider>
-      <Router>
-        <div className="min-h-screen flex flex-col">
-          {/* Navbar GLOBAL */}
-          <Navbar />
+function AppContent() {
+  const location = useLocation();
+  const isLandingPage = location.pathname === "/";
 
-          <main className="flex-grow">
-            <Routes>
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow">
+        <Routes>
               {/* ===== PUBLIC ===== */}
               <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<Login />} />
@@ -117,12 +116,18 @@ function App() {
                 <Route path="questions" element={<QuestionManagement />} />
                 <Route path="users" element={<UserManagement />} />
               </Route>
-            </Routes>
-          </main>
+        </Routes>
+      </main>
+      {isLandingPage && <Footer />}
+    </div>
+  );
+}
 
-          {/* Footer GLOBAL */}
-          <Footer />
-        </div>
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppContent />
       </Router>
     </AuthProvider>
   );

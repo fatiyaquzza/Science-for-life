@@ -42,11 +42,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.post('/auth/login', { email, password });
       const { token, user } = res.data;
-  
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
       setUser(user);
-  
       return { success: true, user };
     } catch (error) {
       return {
@@ -55,7 +53,6 @@ export const AuthProvider = ({ children }) => {
       };
     }
   };
-  
 
   const register = async (name, email, password, job, address) => {
     try {
@@ -64,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
       setUser(user);
-      return { success: true };
+      return { success: true, user };
     } catch (error) {
       return {
         success: false,
