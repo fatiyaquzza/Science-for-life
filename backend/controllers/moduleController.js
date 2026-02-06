@@ -13,7 +13,6 @@ const getAllModules = async (req, res) => {
 
     res.json({ modules });
   } catch (error) {
-    console.error('Get all modules error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -33,7 +32,6 @@ const getModuleById = async (req, res) => {
 
     res.json({ module: modules[0] });
   } catch (error) {
-    console.error('Get module by id error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -62,7 +60,6 @@ const createModule = async (req, res) => {
       module: newModule[0]
     });
   } catch (error) {
-    console.error('Create module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -102,7 +99,6 @@ const updateModule = async (req, res) => {
       module: updatedModule[0]
     });
   } catch (error) {
-    console.error('Update module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -125,7 +121,6 @@ const deleteModule = async (req, res) => {
 
     res.json({ message: 'Module deleted successfully' });
   } catch (error) {
-    console.error('Delete module error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

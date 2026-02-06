@@ -8,7 +8,6 @@ const getAllFeedback = async (req, res) => {
     );
     res.json({ feedback: rows });
   } catch (error) {
-    console.error('Get feedback error:', error);
     res.status(500).json({
       success: false,
       message: 'Gagal mengambil data pesan.',
@@ -39,7 +38,6 @@ const submitFeedback = async (req, res) => {
       id: result.insertId,
     });
   } catch (error) {
-    console.error('Contact feedback error:', error);
     res.status(500).json({
       success: false,
       message: 'Gagal mengirim pesan. Silakan coba lagi.',

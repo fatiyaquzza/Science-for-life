@@ -33,7 +33,6 @@ const getAllUsers = async (req, res) => {
 
     res.json({ users });
   } catch (error) {
-    console.error('Get all users error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
@@ -54,7 +53,6 @@ const getUserById = async (req, res) => {
 
     res.json({ user: users[0] });
   } catch (error) {
-    console.error("Get user by id error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -143,7 +141,6 @@ const updateUser = async (req, res) => {
       user: updatedUser[0],
     });
   } catch (error) {
-    console.error("Update user error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -172,7 +169,6 @@ const deleteUser = async (req, res) => {
 
     res.json({ message: "User deleted successfully" });
   } catch (error) {
-    console.error("Delete user error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };

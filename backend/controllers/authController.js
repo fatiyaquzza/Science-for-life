@@ -60,7 +60,6 @@ const register = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Register error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -69,55 +68,33 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log("[LOGIN] Request:", {
-      email: email || "(kosong)",
-      passwordAda: !!password,
-    });
-
     if (!email || !password) {
-      console.log("[LOGIN] Gagal: email atau password kosong");
       return res
         .status(400)
         .json({ message: "Email and password are required" });
     }
 
-    // Find user
     const [users] = await pool.execute("SELECT * FROM users WHERE email = ?", [
       email,
     ]);
 
     if (users.length === 0) {
-      console.log("[LOGIN] Gagal: user tidak ditemukan untuk email:", email);
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
     const user = users[0];
-    console.log("[LOGIN] User ditemukan:", {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-    });
-
-    // Verify password
     const isValidPassword = await bcrypt.compare(password, user.password);
-    console.log(
-      "[LOGIN] Cek password:",
-      isValidPassword ? "COCOK" : "TIDAK COCOK",
-    );
 
     if (!isValidPassword) {
-      console.log("[LOGIN] Gagal: password salah");
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    // Generate token
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "7d" },
     );
 
-    console.log("[LOGIN] Sukses:", user.email);
     res.json({
       message: "Login successful",
       token,
@@ -131,7 +108,6 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("[LOGIN] Error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -149,7 +125,6 @@ const getMe = async (req, res) => {
 
     res.json({ user: users[0] });
   } catch (error) {
-    console.error("Get me error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };

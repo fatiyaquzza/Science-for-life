@@ -29,7 +29,6 @@ const ChatAI = ({ subModuleId, subModuleName }) => {
         { role: 'assistant', text: res.data.message }
       ]);
     } catch (error) {
-      console.error('AI Chat error:', error);
       setError('AI tidak merespons dengan baik. Silakan coba lagi beberapa saat lagi.');
       setMessages((prev) => [
         ...prev,

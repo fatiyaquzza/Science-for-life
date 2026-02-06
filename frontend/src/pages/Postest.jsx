@@ -51,7 +51,6 @@ const Postest = () => {
         },
       });
     } catch (error) {
-      console.error(error);
       setError("Terjadi kesalahan saat menyimpan jawaban");
       setSubmitting(false);
     }

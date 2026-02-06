@@ -56,8 +56,6 @@ Jawablah dengan bahasa Indonesia yang jelas, ramah, dan mudah dipahami. Jika per
       sub_module_name: subModule.name
     });
   } catch (error) {
-    console.error('AI Chat error:', error);
-
     // Tangani kasus model 404 dengan pesan yang lebih jelas ke frontend
     if (error.message && error.message.includes('404 Not Found')) {
       return res.status(500).json({
