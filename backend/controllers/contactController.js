@@ -1,5 +1,21 @@
 const pool = require('../config/database');
 
+// Get all contact feedback (admin only)
+const getAllFeedback = async (req, res) => {
+  try {
+    const [rows] = await pool.execute(
+      'SELECT id, name, email, subject, message, created_at FROM contact_feedback ORDER BY created_at DESC'
+    );
+    res.json({ feedback: rows });
+  } catch (error) {
+    console.error('Get feedback error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Gagal mengambil data pesan.',
+    });
+  }
+};
+
 // Submit contact/feedback form
 const submitFeedback = async (req, res) => {
   try {
@@ -31,4 +47,4 @@ const submitFeedback = async (req, res) => {
   }
 };
 
-module.exports = { submitFeedback };
+module.exports = { getAllFeedback, submitFeedback };

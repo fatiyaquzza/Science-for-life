@@ -139,38 +139,41 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       {/* Hero Section - Full Screen */}
       <section
         id="hero"
-        className="relative min-h-screen flex flex-col justify-center text-white overflow-hidden pt-16"
+        className="relative flex flex-col justify-center min-h-screen pt-16 overflow-hidden text-white"
         style={{
-          background:
-            "linear-gradient(135deg, rgba(16, 97, 70, 0.92) 0%, rgba(9, 57, 42, 0.95) 100%), url(https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=1600&q=80)",
+          background: `
+      radial-gradient(circle at center, rgba(9,57,42,0.9) 0%, rgba(16,97,70,0.6) 40%, rgba(16,97,70,0.3) 100%),
+      linear-gradient(135deg, rgba(16,97,70,0.55) 0%, rgba(9,57,42,0.65) 100%),
+      url(https://images.unsplash.com/photo-1694230155228-cdde50083573?q=80&w=2070&auto=format&fit=crop)
+    `,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed",
         }}
       >
-        <div className="container mx-auto px-4 relative z-10 flex-1 flex flex-col justify-center">
-          <div className="text-center max-w-5xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+        <div className="container relative z-10 flex flex-col justify-center flex-1 px-4 mx-auto">
+          <div className="max-w-5xl mx-auto text-center">
+            <h1 className="mb-6 text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
               Belajar Sains untuk Kehidupan
               <br />
-              <span className="bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">
+              <span className="text-transparent bg-gradient-to-r from-white to-green-200 bg-clip-text">
                 yang Lebih Bermakna
               </span>
             </h1>
-            <p className="text-lg md:text-xl mb-12 text-green-50/95 max-w-4xl mx-auto leading-relaxed">
+            <p className="max-w-4xl mx-auto mb-12 text-lg leading-relaxed md:text-xl text-green-50/95">
               Platform pembelajaran interaktif yang menyingkapkan sains ke dalam
               kehidupan sehari-hari. Belajar dengan cara yang menakjubkan dan
               lebih bermakna.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               {user ? (
                 <Link
                   to="/dashboard"
-                  className="bg-green-500 hover:bg-green-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className="px-10 py-4 text-lg font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600 hover:shadow-xl hover:scale-105"
                 >
                   Mulai Belajar Sekarang
                 </Link>
@@ -178,13 +181,13 @@ const LandingPage = () => {
                 <>
                   <Link
                     to="/register"
-                    className="bg-green-500 hover:bg-green-600 text-white px-10 py-4 rounded-full font-semibold text-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                    className="px-10 py-4 text-lg font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600 hover:shadow-xl hover:scale-105"
                   >
                     Mulai Belajar Sekarang
                   </Link>
                   <Link
                     to="/#program-unggulan"
-                    className="border-2 border-white text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-green-700 transition-all duration-300"
+                    className="px-10 py-4 text-lg font-semibold text-white transition-all duration-300 border-2 border-white rounded-full hover:bg-white hover:text-green-700"
                   >
                     Lihat Modul Pembelajaran
                   </Link>
@@ -196,7 +199,7 @@ const LandingPage = () => {
         {/* Scroll indicator with bounce effect */}
         <a
           href="/#tentang-kami"
-          className="absolute bottom-8 left-1/2 z-10 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors animate-bounce-smooth border border-white/30"
+          className="absolute z-10 flex items-center justify-center w-12 h-12 text-white transition-colors border rounded-full bottom-8 left-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/30 animate-bounce-smooth border-white/30"
           aria-label="Scroll ke bawah"
         >
           <ChevronDown className="w-6 h-6" />
@@ -205,23 +208,23 @@ const LandingPage = () => {
 
       {/* About Section */}
       <section id="tentang-kami" className="py-24 bg-white scroll-mt-20">
-        <div className="container mx-auto px-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="container px-20 mx-auto">
+          <div className="grid items-center grid-cols-1 gap-16 lg:grid-cols-2">
             <div className="order-2 lg:order-1">
-              <span className="text-green-600 font-semibold text-sm uppercase tracking-widest">
+              <span className="text-sm font-semibold tracking-widest text-green-600 uppercase">
                 — Tentang —
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-6">
+              <h2 className="mt-2 mb-6 text-4xl font-bold text-gray-900 md:text-5xl">
                 Science For Life
               </h2>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+              <p className="mb-6 text-lg leading-relaxed text-gray-600">
                 Science For Life hadir sebagai jembatan inovatif bagi siswa yang
                 ingin memperdalam sains kehidupan, kontekstual, berbasis
                 penelitian, dan meningkatkan literasi sains yang sebenarnya
                 membuka makna menjaga kehidupan, lingkungan, dan nilai
                 kemanusiaan.
               </p>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <p className="text-lg leading-relaxed text-gray-600">
                 Kami menyediakan platform pembelajaran yang interaktif, menarik,
                 dan mudah dipahami untuk semua kalangan.
               </p>
@@ -234,7 +237,7 @@ const LandingPage = () => {
                     />
                   ))}
                 </div>
-                <span className="text-gray-600 text-sm font-medium">
+                <span className="text-sm font-medium text-gray-600">
                   Platform terpercaya
                 </span>
               </div>
@@ -246,8 +249,8 @@ const LandingPage = () => {
                   alt="Students Learning"
                   className="rounded-2xl shadow-2xl w-full max-w-lg mx-auto object-cover aspect-[4/3]"
                 />
-                <div className="absolute -bottom-4 -right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg">
-                  <span className="font-bold">500+</span> Siswa Aktif
+                <div className="absolute px-4 py-2 text-white bg-green-600 rounded-lg shadow-lg -bottom-4 -right-4">
+                  <span className="font-bold">100+</span> Pengguna Aktif
                 </div>
               </div>
             </div>
@@ -264,45 +267,45 @@ const LandingPage = () => {
             "linear-gradient(160deg, #0d4d3a 0%, #0a3d2e 30%, #062d22 100%)",
         }}
       >
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <span className="text-green-300 font-semibold text-sm uppercase tracking-widest">
+        <div className="container px-4 mx-auto">
+          <div className="mb-16 text-center">
+            <span className="text-sm font-semibold tracking-widest text-green-300 uppercase">
               — Terbukti —
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
+            <h2 className="mt-2 mb-4 text-4xl font-bold text-white md:text-5xl">
               PROGRAM UNGGULAN
             </h2>
-            <p className="text-green-100/90 text-lg max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto text-lg text-green-100/90">
               Platform pembelajaran sains yang dirancang untuk membuka wawasan
               dan menginspirasi generasi muda. Akses modul berkualitas dengan
               pendekatan kontekstual dan berbasis penelitian.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto md:grid-cols-2 lg:grid-cols-4">
             {programs.map((program, index) => {
               const IconComponent = program.icon;
               return (
                 <div
                   key={index}
-                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-green-400 hover:bg-white/15 transition-all duration-300 group"
+                  className="p-8 transition-all duration-300 border-l-4 border-green-400 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/15 group"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-green-500/30 flex items-center justify-center mb-6 group-hover:bg-green-500/50 transition-colors">
-                    <IconComponent className="w-7 h-7 text-green-300" />
+                  <div className="flex items-center justify-center mb-6 transition-colors w-14 h-14 rounded-xl bg-green-500/30 group-hover:bg-green-500/50">
+                    <IconComponent className="text-green-300 w-7 h-7" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">
+                  <h3 className="mb-4 text-xl font-bold text-white">
                     {program.title}
                   </h3>
-                  <p className="text-green-100/80 leading-relaxed">
+                  <p className="leading-relaxed text-green-100/80">
                     {program.description}
                   </p>
                 </div>
               );
             })}
           </div>
-          <div className="text-center mt-12">
+          <div className="mt-12 text-center">
             <Link
               to={user ? "/dashboard" : "/register"}
-              className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 hover:shadow-xl hover:scale-105"
+              className="inline-flex items-center gap-2 px-8 py-4 font-semibold text-white transition-all duration-300 bg-green-500 rounded-full hover:bg-green-600 hover:shadow-xl hover:scale-105"
             >
               <Leaf className="w-5 h-5" />
               Lihat Semua Program
@@ -316,13 +319,13 @@ const LandingPage = () => {
         id="faq"
         className="py-24 bg-gradient-to-b from-green-50 to-white scroll-mt-20"
       >
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-green-700 mb-4">
+        <div className="container max-w-4xl px-4 mx-auto">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-green-700 md:text-5xl">
               FAQs
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full" />
-            <p className="text-gray-600 text-lg mt-4">
+            <div className="w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-green-400 to-green-600" />
+            <p className="mt-4 text-lg text-gray-600">
               Pertanyaan yang sering ditanyakan
             </p>
           </div>
@@ -330,13 +333,13 @@ const LandingPage = () => {
             {faqs.map((faq, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl border-2 border-green-50 hover:border-green-200 hover:shadow-lg transition-all duration-300 overflow-hidden"
+                className="overflow-hidden transition-all duration-300 bg-white border-2 rounded-2xl border-green-50 hover:border-green-200 hover:shadow-lg"
               >
                 <button
-                  className="w-full text-left p-6 flex justify-between items-center hover:bg-green-50/50 transition-colors duration-300"
+                  className="flex items-center justify-between w-full p-6 text-left transition-colors duration-300 hover:bg-green-50/50"
                   onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 pr-4">
+                  <h3 className="pr-4 text-lg font-semibold text-gray-900">
                     {faq.question}
                   </h3>
                   <span
@@ -355,7 +358,7 @@ const LandingPage = () => {
                   }`}
                 >
                   <div className="px-6 pb-6">
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="leading-relaxed text-gray-600">
                       {faq.answer}
                     </p>
                   </div>
@@ -375,38 +378,38 @@ const LandingPage = () => {
             "linear-gradient(160deg, #0d4d3a 0%, #0a3d2e 30%, #062d22 100%)",
         }}
       >
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <span className="text-green-300 font-semibold text-sm uppercase tracking-widest">
+        <div className="container px-4 mx-auto">
+          <div className="mb-16 text-center">
+            <span className="text-sm font-semibold tracking-widest text-green-300 uppercase">
               — Tim Kami —
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">
+            <h2 className="mt-2 mb-4 text-4xl font-bold text-white md:text-5xl">
               Kenali Sosok di Balik Layar
             </h2>
-            <p className="text-green-100/90 text-lg max-w-2xl mx-auto">
+            <p className="max-w-2xl mx-auto text-lg text-green-100/90">
               Inilah tim di balik Science For Life yang berperan dalam
               menghadirkan sains agar lebih dekat dan bermakna dalam kehidupan
               sehari-hari.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid max-w-6xl grid-cols-1 gap-8 mx-auto sm:grid-cols-2 lg:grid-cols-4">
             {teamMembers.map((member, index) => (
               <div
                 key={index}
-                className="group bg-white/90 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                className="overflow-hidden transition-all duration-300 shadow-lg group bg-white/90 rounded-2xl hover:shadow-2xl hover:-translate-y-2"
               >
-                <div className="aspect-square overflow-hidden">
+                <div className="overflow-hidden aspect-square">
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
                 <div className="p-6 text-center">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">
+                  <h3 className="mb-1 text-xl font-bold text-gray-900">
                     {member.name}
                   </h3>
-                  <p className="text-green-600 font-medium text-sm">
+                  <p className="text-sm font-medium text-green-600">
                     {member.role}
                   </p>
                 </div>
@@ -418,28 +421,28 @@ const LandingPage = () => {
 
       {/* Contact Us Section */}
       <section id="kontak" className="py-24 bg-gray-50 scroll-mt-20">
-        <div className="container mx-auto px-4">
+        <div className="container px-4 mx-auto">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <span className="text-green-600 font-semibold text-sm uppercase tracking-widest">
+            <div className="mb-12 text-center">
+              <span className="text-sm font-semibold tracking-widest text-green-600 uppercase">
                 — Hubungi Kami —
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2 mb-4">
+              <h2 className="mt-2 mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
                 Contact Us
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-lg text-gray-600">
                 Punya saran atau masukan? Kami senang mendengar dari Anda.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              <div className="lg:col-span-1 space-y-6">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+              <div className="space-y-6 lg:col-span-1">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl">
                     <Mail className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
+                    <h3 className="mb-1 font-semibold text-gray-900">Email</h3>
                     <a
                       href="mailto:support@scienceforlife.com"
                       className="text-gray-600 hover:text-green-600"
@@ -449,11 +452,11 @@ const LandingPage = () => {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl">
                     <Phone className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">
+                    <h3 className="mb-1 font-semibold text-gray-900">
                       Telepon
                     </h3>
                     <a
@@ -465,11 +468,11 @@ const LandingPage = () => {
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl">
                     <MapPin className="w-6 h-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">Alamat</h3>
+                    <h3 className="mb-1 font-semibold text-gray-900">Alamat</h3>
                     <p className="text-gray-600">Jakarta, Indonesia</p>
                   </div>
                 </div>
@@ -478,11 +481,11 @@ const LandingPage = () => {
               <div className="lg:col-span-2">
                 <form
                   onSubmit={handleContactSubmit}
-                  className="bg-white rounded-2xl shadow-xl p-8 space-y-6"
+                  className="p-8 space-y-6 bg-white shadow-xl rounded-2xl"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block mb-2 text-sm font-medium text-gray-700">
                         Nama *
                       </label>
                       <input
@@ -495,12 +498,12 @@ const LandingPage = () => {
                             name: e.target.value,
                           })
                         }
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                        className="w-full px-4 py-3 transition-all border border-gray-200 outline-none rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200"
                         placeholder="Nama lengkap Anda"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block mb-2 text-sm font-medium text-gray-700">
                         Email *
                       </label>
                       <input
@@ -513,13 +516,13 @@ const LandingPage = () => {
                             email: e.target.value,
                           })
                         }
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                        className="w-full px-4 py-3 transition-all border border-gray-200 outline-none rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200"
                         placeholder="email@contoh.com"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
                       Subjek
                     </label>
                     <input
@@ -531,12 +534,12 @@ const LandingPage = () => {
                           subject: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                      className="w-full px-4 py-3 transition-all border border-gray-200 outline-none rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       placeholder="Subjek pesan (opsional)"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block mb-2 text-sm font-medium text-gray-700">
                       Pesan *
                     </label>
                     <textarea
@@ -549,23 +552,23 @@ const LandingPage = () => {
                           message: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all resize-none"
+                      className="w-full px-4 py-3 transition-all border border-gray-200 outline-none resize-none rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       placeholder="Tulis saran atau masukan Anda..."
                     />
                   </div>
                   {contactStatus === "success" && (
-                    <div className="p-4 bg-green-50 text-green-700 rounded-xl">
+                    <div className="p-4 text-green-700 bg-green-50 rounded-xl">
                       Terima kasih! Pesan Anda telah berhasil dikirim.
                     </div>
                   )}
                   {contactStatus === "error" && (
-                    <div className="p-4 bg-red-50 text-red-700 rounded-xl">
+                    <div className="p-4 text-red-700 bg-red-50 rounded-xl">
                       Gagal mengirim pesan. Silakan coba lagi.
                     </div>
                   )}
                   <button
                     type="submit"
-                    className="w-full md:w-auto flex items-center justify-center mx-auto gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg"
+                    className="flex items-center justify-center w-full gap-2 px-8 py-4 mx-auto font-semibold text-white transition-all duration-300 bg-primary hover:bg-[#0C452A] md:w-auto  rounded-xl hover:shadow-lg"
                   >
                     <Send className="w-5 h-5" />
                     Kirim Pesan
@@ -578,12 +581,12 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section - Siap Belajar - Organic Green Shape */}
-      <section className="py-24 bg-gray-50 overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="relative max-w-7xl mx-auto">
+      <section className="py-24 overflow-hidden bg-gray-50">
+        <div className="container px-4 mx-auto">
+          <div className="relative mx-auto max-w-7xl">
             {/* Organic blob shape - rounded corners with subtle curves */}
             <div
-              className="relative overflow-hidden px-8 md:px-16 py-16 md:py-20 bg-green-600"
+              className="relative px-8 py-16 overflow-hidden bg-[#2ECC71] md:px-16 md:py-20"
               style={{
                 borderRadius: "50px",
                 boxShadow:
@@ -591,9 +594,9 @@ const LandingPage = () => {
               }}
             >
               {/* Decorative flowing lines - LEFT side */}
-              <div className="absolute left-8 md:left-16 top-1/2 -translate-y-1/2">
+              <div className="absolute -translate-y-1/2 left-8 md:left-16 top-1/2">
                 <svg
-                  className="w-20 h-24 md:w-24 md:h-28 opacity-25"
+                  className="w-20 h-24 opacity-25 md:w-24 md:h-28"
                   viewBox="0 0 100 120"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -630,9 +633,9 @@ const LandingPage = () => {
               </div>
 
               {/* Decorative flowing lines - RIGHT side */}
-              <div className="absolute right-8 md:right-16 top-1/2 -translate-y-1/2">
+              <div className="absolute -translate-y-1/2 right-8 md:right-16 top-1/2">
                 <svg
-                  className="w-20 h-24 md:w-24 md:h-28 opacity-25"
+                  className="w-20 h-24 opacity-25 md:w-24 md:h-28"
                   viewBox="0 0 100 120"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -669,7 +672,7 @@ const LandingPage = () => {
               </div>
 
               <div className="relative z-10 text-center text-white">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8 px-4">
+                <h2 className="px-4 mb-6 text-3xl font-bold md:text-4xl lg:text-5xl md:mb-8">
                   Siap untuk belajar?
                 </h2>
 
