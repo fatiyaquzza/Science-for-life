@@ -7,6 +7,7 @@ const Material = () => {
   const navigate = useNavigate();
   const [material, setMaterial] = useState(null);
   const [subModule, setSubModule] = useState(null);
+  const [module, setModule] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,10 +16,17 @@ const Material = () => {
       api.get(`/materials/submodule/${id}`),
     ])
       .then(([subModuleRes, materialsRes]) => {
-        setSubModule(subModuleRes.data.subModule);
+        const sub = subModuleRes.data.subModule;
+        setSubModule(sub);
         const materials = materialsRes.data.materials;
         if (materials.length > 0) {
-          setMaterial(materials[0]); // Get first material
+          setMaterial(materials[0]);
+        }
+        if (sub?.module_id) {
+          api
+            .get(`/modules/${sub.module_id}`)
+            .then((res) => setModule(res.data.module))
+            .catch(() => {});
         }
         setLoading(false);
       })
@@ -33,47 +41,100 @@ const Material = () => {
     return match && match[2].length === 11 ? match[2] : null;
   };
 
+  const moduleId = subModule?.module_id;
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-500">Memuat materi...</p>
+      <div className="flex items-center justify-center min-h-screen bg-light">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-4 border-b-4 rounded-full animate-spin border-primary"></div>
+          <p className="font-medium text-slate-600">Memuat materi...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-light py-8 pt-24">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-secondary hover:underline mb-4"
-        >
-          ← Kembali
-        </button>
+    <div className="min-h-screen py-6 sm:py-8 pt-20 sm:pt-24 pb-12 bg-light">
+      <div className="container px-4 mx-auto max-w-7xl">
+        {/* Breadcrumb: Modul > Sub Modul > Materi */}
+        <nav className="flex flex-wrap items-center gap-2 mb-6 md:mb-8 text-xs sm:text-sm overflow-x-auto pb-2 -mx-1">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="font-medium transition-colors text-slate-600 hover:text-primary"
+          >
+            Modul
+          </button>
+          <svg
+            className="w-4 h-4 text-slate-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+          <button
+            onClick={() => moduleId && navigate(`/module/${moduleId}`)}
+            className={`font-medium transition-colors ${
+              moduleId
+                ? "text-slate-600 hover:text-primary"
+                : "text-slate-500 cursor-default"
+            }`}
+          >
+            Sub Modul
+          </button>
+          <svg
+            className="w-4 h-4 text-slate-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+          <span className="font-semibold text-secondary">Materi</span>
+        </nav>
 
-        <h1 className="text-3xl font-bold text-primary mb-8">
-          {subModule?.name || "Materi"}
-        </h1>
+        {/* Materi Header Card */}
+        <div className="p-6 sm:p-8 mb-4 bg-white border shadow-xl rounded-2xl border-slate-100">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 break-words">
+            {subModule?.name || "Materi"}
+          </h1>
+          {module?.name && (
+            <p className="mt-2 text-slate-600">{module.name}</p>
+          )}
+        </div>
 
         {material ? (
-          <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
+          <div className="space-y-4">
+            {/* Deskripsi Materi */}
             {material.description && (
-              <div>
-                <h2 className="text-xl font-semibold text-primary mb-3">
+              <div className="p-6 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
+                <h2 className="mb-4 text-2xl font-bold text-slate-900">
                   Deskripsi Materi
                 </h2>
-                <p className="text-gray-700 whitespace-pre-line">
+                <p className="leading-relaxed text-slate-700 whitespace-pre-line">
                   {material.description}
                 </p>
               </div>
             )}
 
+            {/* Video Pembelajaran */}
             {material.video_url && (
-              <div>
-                <h2 className="text-xl font-semibold text-primary mb-3">
+              <div className="p-4 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
+                <h2 className="mb-4 text-2xl font-bold text-slate-900">
                   Video Pembelajaran
                 </h2>
-                <div className="aspect-video">
+                <div className="overflow-hidden rounded-xl aspect-video">
                   {extractVideoId(material.video_url) ? (
                     <iframe
                       width="100%"
@@ -85,11 +146,11 @@ const Material = () => {
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
-                      className="rounded-lg"
-                    ></iframe>
+                      className="w-full h-full"
+                    />
                   ) : (
-                    <div className="bg-gray-200 rounded-lg p-8 text-center">
-                      <p className="text-gray-500">
+                    <div className="flex items-center justify-center h-full bg-slate-100">
+                      <p className="text-slate-500">
                         URL video tidak valid atau tidak dapat dimuat
                       </p>
                     </div>
@@ -98,16 +159,17 @@ const Material = () => {
               </div>
             )}
 
+            {/* Materi PDF */}
             {material.file_url && (
-              <div>
-                <h2 className="text-xl font-semibold text-primary mb-3">
+              <div className="p-6 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
+                <h2 className="mb-4 text-2xl font-bold text-slate-900">
                   Materi PDF
                 </h2>
                 <a
                   href={`http://localhost:5000${material.file_url}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center bg-secondary text-white px-6 py-3 rounded-lg hover:bg-opacity-80 transition-colors"
+                  className="inline-flex items-center px-6 py-3 font-semibold text-white transition-all rounded-xl bg-secondary hover:shadow-lg hover:shadow-secondary/30"
                 >
                   <span className="mr-2">📄</span>
                   Download PDF
@@ -115,18 +177,45 @@ const Material = () => {
               </div>
             )}
 
-            <div className="pt-6 border-t">
+            {/* CTA: Lanjut ke Postest */}
+            <div className="p-6 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
               <button
                 onClick={() => navigate(`/postest/${id}`)}
-                className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors"
+                className="w-full py-3 font-semibold text-white transition-all rounded-xl bg-primary hover:bg-opacity-90 hover:shadow-lg"
               >
                 Lanjut ke Postest
               </button>
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-            <p className="text-gray-500">Materi belum tersedia</p>
+          <div className="p-16 text-center bg-white border shadow-xl rounded-2xl border-slate-100">
+            <div className="flex items-center justify-center w-24 h-24 mx-auto mb-6 rounded-full bg-slate-100">
+              <svg
+                className="w-12 h-12 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </div>
+            <h3 className="mb-2 text-xl font-bold text-slate-900">
+              Materi belum tersedia
+            </h3>
+            <p className="mb-6 text-slate-600">
+              Materi untuk sub modul ini belum diunggah
+            </p>
+            <button
+              onClick={() => moduleId && navigate(`/module/${moduleId}`)}
+              className="px-6 py-3 font-medium text-white transition-all rounded-xl bg-primary hover:shadow-lg"
+            >
+              Kembali ke Sub Modul
+            </button>
           </div>
         )}
       </div>
