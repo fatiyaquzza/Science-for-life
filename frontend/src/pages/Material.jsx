@@ -55,10 +55,10 @@ const Material = () => {
   }
 
   return (
-    <div className="min-h-screen py-6 sm:py-8 pt-20 sm:pt-24 pb-12 bg-light">
+    <div className="min-h-screen py-6 pt-20 pb-12 sm:py-8 sm:pt-24 bg-light">
       <div className="container px-4 mx-auto max-w-7xl">
         {/* Breadcrumb: Modul > Sub Modul > Materi */}
-        <nav className="flex flex-wrap items-center gap-2 mb-6 md:mb-8 text-xs sm:text-sm overflow-x-auto pb-2 -mx-1">
+        <nav className="flex flex-wrap items-center gap-2 pb-2 mb-6 -mx-1 overflow-x-auto text-xs md:mb-8 sm:text-sm">
           <button
             onClick={() => navigate("/dashboard")}
             className="font-medium transition-colors text-slate-600 hover:text-primary"
@@ -105,24 +105,22 @@ const Material = () => {
         </nav>
 
         {/* Materi Header Card */}
-        <div className="p-6 sm:p-8 mb-4 bg-white border shadow-xl rounded-2xl border-slate-100">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-slate-900 break-words">
+        <div className="p-6 mb-4 bg-white border shadow-xl sm:p-8 rounded-2xl border-slate-100">
+          <h1 className="text-2xl font-bold tracking-tight break-words sm:text-3xl md:text-4xl text-slate-900">
             {subModule?.name || "Materi"}
           </h1>
-          {module?.name && (
-            <p className="mt-2 text-slate-600">{module.name}</p>
-          )}
+          {module?.name && <p className="mt-2 text-slate-600">{module.name}</p>}
         </div>
 
         {material ? (
           <div className="space-y-4">
             {/* Deskripsi Materi */}
             {material.description && (
-              <div className="p-6 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
+              <div className="p-6 bg-white border shadow-xl sm:p-8 rounded-2xl border-slate-100">
                 <h2 className="mb-4 text-2xl font-bold text-slate-900">
                   Deskripsi Materi
                 </h2>
-                <p className="leading-relaxed text-slate-700 whitespace-pre-line">
+                <p className="leading-relaxed whitespace-pre-line text-slate-700">
                   {material.description}
                 </p>
               </div>
@@ -130,7 +128,7 @@ const Material = () => {
 
             {/* Video Pembelajaran */}
             {material.video_url && (
-              <div className="p-4 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
+              <div className="p-4 bg-white border shadow-xl sm:p-8 rounded-2xl border-slate-100">
                 <h2 className="mb-4 text-2xl font-bold text-slate-900">
                   Video Pembelajaran
                 </h2>
@@ -140,7 +138,7 @@ const Material = () => {
                       width="100%"
                       height="100%"
                       src={`https://www.youtube.com/embed/${extractVideoId(
-                        material.video_url
+                        material.video_url,
                       )}`}
                       title="Video pembelajaran"
                       frameBorder="0"
@@ -161,12 +159,12 @@ const Material = () => {
 
             {/* Materi PDF */}
             {material.file_url && (
-              <div className="p-6 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
+              <div className="p-6 bg-white border shadow-xl sm:p-8 rounded-2xl border-slate-100">
                 <h2 className="mb-4 text-2xl font-bold text-slate-900">
                   Materi PDF
                 </h2>
                 <a
-                  href={`http://localhost:5000${material.file_url}`}
+                  href={`${import.meta.env.VITE_API_URL}${material.file_url}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 font-semibold text-white transition-all rounded-xl bg-secondary hover:shadow-lg hover:shadow-secondary/30"
@@ -178,7 +176,7 @@ const Material = () => {
             )}
 
             {/* CTA: Lanjut ke Postest */}
-            <div className="p-6 sm:p-8 bg-white border shadow-xl rounded-2xl border-slate-100">
+            <div className="p-6 bg-white border shadow-xl sm:p-8 rounded-2xl border-slate-100">
               <button
                 onClick={() => navigate(`/postest/${id}`)}
                 className="w-full py-3 font-semibold text-white transition-all rounded-xl bg-primary hover:bg-opacity-90 hover:shadow-lg"
