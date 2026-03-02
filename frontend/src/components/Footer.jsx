@@ -15,11 +15,11 @@ const Footer = () => {
               className="flex items-center gap-2 mb-4 text-xl font-bold transition-colors hover:text-green-300"
             >
               <Leaf className="w-8 h-8 text-green-400" />
-              Science For Life
+              ILMANA
             </Link>
             <p className="mb-6 text-sm leading-relaxed text-gray-400">
-              Platform pembelajaran sains interaktif untuk kehidupan yang lebih
-              bermakna.
+              ILMANA (Ilmu Manusia dan Alam) adalah platform pembelajaran sains
+              interaktif untuk kehidupan yang lebih bermakna.
             </p>
           </div>
 
@@ -99,9 +99,9 @@ const Footer = () => {
               Tentang Platform
             </h3>
             <p className="text-sm leading-relaxed text-gray-400">
-              Science For Life menyediakan modul pembelajaran sains yang
-              kontekstual dan berbasis penelitian untuk meningkatkan literasi
-              sains generasi muda.
+              ILMANA menyediakan modul pembelajaran sains yang kontekstual dan
+              berbasis penelitian untuk meningkatkan literasi sains generasi
+              muda.
             </p>
           </div>
         </div>
@@ -109,7 +109,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-4 pt-8 mt-12 border-t border-gray-700 md:flex-row">
           <p className="text-sm text-gray-500">
-            © {currentYear} Science For Life. All rights reserved.
+            © {currentYear} ILMANA. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm">
             <a
